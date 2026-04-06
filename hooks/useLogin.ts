@@ -1,15 +1,15 @@
-import { useRouter } from "expo-router";
 import { useMutation } from '@tanstack/react-query';
 import { loginUser, mockLoginUser } from "@/api/auth";
 import Toast from 'react-native-toast-message';
+import { useSession } from "@/contexts/SessionContext";
 
 export const useLogin = () => {
-    const router = useRouter();
+    const { signIn } = useSession();
 
     return useMutation({
         mutationFn: mockLoginUser,
-        onSuccess: () => {
-            router.push('/(tabs)/home')
+        onSuccess: async () => {
+            await signIn('mock-token');
         },
         onError: () => {
             Toast.show({

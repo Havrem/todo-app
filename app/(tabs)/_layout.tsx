@@ -1,19 +1,23 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
+// Screens in this folder should behave like tabs
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-
+        tabBarActiveTintColor:  "rgba(188, 141, 131, 1)",
+        tabBarInactiveTintColor: 'grey',
         tabBarStyle: {
-          backgroundColor: 'white'
+          backgroundColor: 'white',
+          height: 80,
+          paddingTop: 10
         }
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="index"
         options={{
           title: 'Home',
           tabBarIcon: ({ color, size }) => (
