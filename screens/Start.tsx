@@ -1,6 +1,8 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import logo from "../assets/logo.png";
 import { useState } from "react";
+import { LoginForm } from "@/components/forms/LoginForm";
+import { RegisterForm } from "@/components/forms/RegisterForm";
 
 export default function Start() {
   const [activeSelection, setActiveSelection] = useState('login');
@@ -17,14 +19,8 @@ export default function Start() {
             <Text style={styles.selectorText}>REGISTER</Text>
           </Pressable>
         </View>
-        <View style={styles.auth}>
-          <Text>Auth</Text>
-        </View>
-        <View style={styles.bottomSection}>
-          <Pressable style={styles.confirmBtn} onPress={() => setActiveSelection('login')}>
-            <Text style={styles.selectorText}>Let's go!</Text>
-          </Pressable>
-        </View>
+        {activeSelection == 'login' ? <LoginForm/> : <RegisterForm/>}
+
       </View>                        
     </ScrollView>
   );
@@ -82,23 +78,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'rgba(0, 0, 0, 0.51)',
     textAlign: 'center'
-  },
-  auth: {
-    backgroundColor: "rgba(250, 255, 245, 0.78)",
-    // flex: 4,
-    padding: 20,
-  },
-  bottomSection: {
-    backgroundColor: "rgba(219, 209, 181, 1)",
-    // flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  confirmBtn: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 40
   }
 });

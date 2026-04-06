@@ -1,5 +1,9 @@
 import Start from "@/screens/Start";
 import { useFonts } from 'expo-font';
+import Toast from 'react-native-toast-message';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -10,5 +14,12 @@ export default function App() {
 
   if (!fontsLoaded) return null;
 
-  return <Start/>;
+  return (
+    <>
+      <QueryClientProvider client={queryClient}>
+        <Start />
+        <Toast />
+      </QueryClientProvider>
+    </>
+  );
 }
