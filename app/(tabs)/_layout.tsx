@@ -7,10 +7,10 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor:  "rgba(188, 141, 131, 1)",
-        tabBarInactiveTintColor: 'grey',
+        tabBarActiveTintColor:  "#6E3409",
+        tabBarInactiveTintColor: 'rgba(110, 52, 9, 0.57)',
         tabBarStyle: {
-          backgroundColor: 'white',
+          backgroundColor: '#dbd0b4',
           height: 80,
           paddingTop: 10
         }
@@ -31,15 +31,6 @@ export default function TabLayout() {
           title: 'Lists',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="list" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="recipes"
-        options={{
-          title: 'Recipes',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="restaurant" size={size} color={color} />
           ),
         }}
       />

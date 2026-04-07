@@ -8,7 +8,7 @@ export default function Start() {
   const [activeSelection, setActiveSelection] = useState('login');
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container} automaticallyAdjustKeyboardInsets>
       <Image source={logo} style={styles.logo} />
       <View style={styles.authContainer}>
         <View style={styles.selector}>
@@ -28,7 +28,6 @@ export default function Start() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(188, 141, 131, 1)",
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -36,7 +35,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     // borderColor: "red",
     // borderWidth: 3,
-    gap: 15
+    gap: 15,
+    backgroundColor: "rgb(188, 141, 131)",
   },
   logo: {
     resizeMode: "contain",

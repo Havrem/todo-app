@@ -3,6 +3,8 @@ import Toast from 'react-native-toast-message';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SessionProvider } from '@/contexts/SessionContext';
 import RouteLayout from '../components/RouteLayout';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const queryClient = new QueryClient();
 
@@ -18,10 +20,16 @@ export default function Root() {
 
   return (
     <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouteLayout/>
-        <Toast />
-      </QueryClientProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <SafeAreaProvider>
+            <SafeAreaView style={{ flex:1, backgroundColor: "rgb(255, 255, 255)",}}>
+                <RouteLayout/>
+                <Toast />
+            </SafeAreaView>
+          </SafeAreaProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
     </SessionProvider>
   );
 }
