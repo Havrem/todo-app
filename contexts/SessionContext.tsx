@@ -21,19 +21,19 @@ export function SessionProvider({ children }: { children: React.ReactNode}) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        SecureStore.getItemAsync('session').then((token) => {
+        SecureStore.getItemAsync('token').then((token) => {
             setSession(token);
             setIsLoading(false);
         });
     }, []);
 
     const signIn = async (token: string) => {
-        await SecureStore.setItemAsync('session', token);
+        await SecureStore.setItemAsync('token', token);
         setSession(token);
     }
 
     const signOut = async () => {
-        await SecureStore.deleteItemAsync('session');
+        await SecureStore.deleteItemAsync('token');
         setSession(null);
     }
 

@@ -1,3 +1,9 @@
+if (__DEV__) {
+  require('./mocks/native').server.listen({
+    onUnhandledRequest: 'warn',
+  });
+}
+
 import { useFonts } from 'expo-font';
 import Toast from 'react-native-toast-message';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

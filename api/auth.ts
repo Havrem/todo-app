@@ -1,9 +1,4 @@
-import { LoginData } from '@/schemas/auth';
-import axios from 'axios';
+import { LoginData, LoginResponse } from '@/schemas/auth';
+import { api } from './client';
 
-export const loginUser = (credentials: LoginData) => axios.post('auth/login', credentials);
-
-export const mockLoginUser = async (credentials: LoginData) => {
-    if (credentials.email === 'Abc') return { success: true}
-    throw new Error ('Invalid credentials');
-};
+export const loginUser = (credentials: LoginData): Promise<LoginResponse> => api.post<LoginResponse>('/auth/login', credentials).then((r) => r.data);

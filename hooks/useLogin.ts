@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
-import { loginUser, mockLoginUser } from "@/api/auth";
+import { loginUser } from "@/api/auth";
 import Toast from 'react-native-toast-message';
 import { useSession } from "@/contexts/SessionContext";
 
-export const useLogin = () => {
+export function useLogin() {
     const { signIn } = useSession();
 
     return useMutation({
-        mutationFn: mockLoginUser,
-        onSuccess: async () => {
-            await signIn('mock-token');
+        mutationFn: loginUser,
+        onSuccess: async ({token}) => {
+            await signIn(token);
         },
         onError: () => {
             Toast.show({
