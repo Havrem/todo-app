@@ -25,3 +25,14 @@ export const registerResponse = z.object({
 });
 
 export type RegisterResponse = z.infer<typeof registerResponse>;
+
+export const updatePasswordSchema = z.object({
+    currentPassword: z.string().nonempty('Required'),
+    newPassword: z.string().min(6, 'Must be at least 6 characters'),
+    confirmPassword: z.string().nonempty('Required'),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+});
+
+export type UpdatePassword = z.infer<typeof updatePasswordSchema>;

@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
+import { api, setUnauthorizedHandler } from "@/api/client";
 
 type SessionContextType = {
-    session: string | null;
+    token: string | null;
     isLoading: boolean;
     signIn: (token: string) => Promise<void>,
     signOut: () => Promise<void>;
@@ -17,28 +18,39 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: { children: React.ReactNode}) {
-    const [session, setSession] = useState<string | null>(null);
+    const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        SecureStore.getItemAsync('token').then((token) => {
-            setSession(token);
+        SecureStore.getItemAsync('token').then(async (stored) => {
+            setToken(stored);
+            if (stored) {
+                try {
+                    await api.get('/users/profile');
+                } catch {
+                    // 401 is handled by the response interceptor (signs out)
+                }
+            }
             setIsLoading(false);
         });
     }, []);
 
-    const signIn = async (token: string) => {
-        await SecureStore.setItemAsync('token', token);
-        setSession(token);
+    const signIn = async (newToken: string) => {
+        await SecureStore.setItemAsync('token', newToken);
+        setToken(newToken);
     }
 
     const signOut = async () => {
         await SecureStore.deleteItemAsync('token');
-        setSession(null);
+        setToken(null);
     }
 
+    useEffect(() => {
+        setUnauthorizedHandler(signOut);
+    }, []);
+
     return (
-        <SessionContext.Provider value={{ session, isLoading, signIn, signOut}}>
+        <SessionContext.Provider value={{ token, isLoading, signIn, signOut}}>
             {children}
         </SessionContext.Provider>
     )

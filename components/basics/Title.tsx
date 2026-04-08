@@ -14,7 +14,9 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingVertical: 10,
+        paddingHorizontal: 10
     },
     text: {
         fontFamily: 'Glory-Bold',

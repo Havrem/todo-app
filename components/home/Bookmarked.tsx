@@ -1,30 +1,43 @@
-import { List } from "@/schemas/list";
+import { useLists } from "@/hooks/useLists";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
+import { Button } from "../basics/Button";
 import { Title } from "../basics/Title";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useMemo } from "react";
+import { Theme } from "@/constants/themes";
 
 export function Bookmarked() {
-// export function Bookmarked({ lists }: { lists: List }) {
+  const { theme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
+
+  const { data: lists } = useLists();
+
+  const bookmarked = lists?.filter((l) => l.bookmarked) ?? [];
+
   return (
     <View style={styles.container}>
       <Title text="Bookmarked" icon={<Ionicons name="bookmarks" />} />
+      {bookmarked.map((list) => (
+        <Button
+          key={list.id}
+          text={list.title}
+          icon={<Ionicons name="chevron-forward" />}
+          onPress={() => {}}
+        />
+      ))}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#EDE6DC",
-    padding: 10,
-  },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  h1: {
-    fontFamily: "Glory-Bold",
-    color: "rgba(0, 0, 0, 0.59)",
-    fontSize: 16,
-  },
-});
+const makeStyles = (t: Theme) => {
+    return StyleSheet.create({
+        container: {
+          backgroundColor: t.colors.content,
+          paddingVertical: 20,
+          paddingHorizontal: 15,
+          gap: 10,
+          marginBottom: 10
+        },
+    })
+}

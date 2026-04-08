@@ -1,3 +1,4 @@
+import { useRegister } from "@/hooks/useRegister";
 import { RegisterData, registerSchema } from "@/schemas/auth";
 import { Entypo } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,6 +6,8 @@ import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export function RegisterForm() {
+    const { mutate: register } = useRegister();
+
     const {
         control,
         handleSubmit,
@@ -12,7 +15,7 @@ export function RegisterForm() {
     } = useForm<RegisterData>({
         resolver: zodResolver(registerSchema)
     })
-    const onSubmit = (data: any) => console.log(data)
+    const onSubmit = (data: RegisterData) => register(data);
 
     return (
       <>
@@ -29,6 +32,8 @@ export function RegisterForm() {
                     placeholder="Email"
                     onBlur={onBlur}
                     onChangeText={onChange}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={value}
                     style={[styles.formInputText, { textAlign: 'left' }]}
                 />
@@ -49,6 +54,10 @@ export function RegisterForm() {
                     placeholder="Password"
                     onBlur={onBlur}
                     onChangeText={onChange}
+                    secureTextEntry
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    autoComplete="password"
                     value={value}
                     style={[styles.formInputText, { textAlign: 'left' }]}
                   />

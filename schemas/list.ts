@@ -16,6 +16,7 @@ export const listSchema = z.object({
     title: z.string(),
     category: z.string(),
     icon: z.string(),
+    bookmarked: z.boolean(),
     items: z.array(listItemSchema)
 });
 
@@ -30,4 +31,4 @@ export type CreateItemInput = Pick<ListItem, 'type' | 'text'>;
 export type UpdateItemInput = Partial<Pick<ListItem, 'text' | 'isDone'>>;
 
 export type CreateListInput = Pick<List, 'title' | 'category' | 'icon'>;
-export type UpdateListInput = Partial<CreateListInput>;
+export type UpdateListInput = Partial<Pick<List, 'title' | 'category' | 'icon' | 'bookmarked'>>;

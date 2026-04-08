@@ -37,6 +37,8 @@ export function LoginForm() {
                     placeholder="Email"
                     onBlur={onBlur}
                     onChangeText={onChange}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={value}
                     style={[styles.formInputText, { textAlign: 'left' }]}
                 />
@@ -57,6 +59,10 @@ export function LoginForm() {
                     placeholder="Password"
                     onBlur={onBlur}
                     onChangeText={onChange}
+                    secureTextEntry
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    autoComplete="password"
                     value={value}
                     style={[styles.formInputText, { textAlign: 'left' }]}
                   />

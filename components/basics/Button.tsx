@@ -3,12 +3,12 @@ import { useTheme } from "@/contexts/ThemeContext";
 import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
-export function Button({ text, icon, size = 25, color , onPress } : {text: string, icon: React.ReactElement<any>, size?: number, color?: string, onPress: () => void}) {
+export function Button({ text, icon, size = 25, color, backgroundColor, onPress } : {text: string, icon?: React.ReactElement<any>, size?: number, color?: string, backgroundColor?: string, onPress: () => void}) {
     const { theme } = useTheme();
     const styles = makeStyles(theme);
 
     return (
-        <Pressable style={styles.btn} onPress={onPress}>
+        <Pressable style={[styles.btn, !icon && { justifyContent: 'center' }, backgroundColor ? { backgroundColor } : null]} onPress={onPress}>
             <Text style={styles.txt}>{text}</Text>
             {icon && React.cloneElement(icon, { size: size, color: color ? color : theme.colors.icon})}
         </Pressable>

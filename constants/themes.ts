@@ -6,7 +6,9 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
-            text: 'rgba(0, 0, 0, 0.78)'
+            text: 'rgba(0, 0, 0, 0.78)',
+            subtle: 'rgba(0, 0, 0, 0.54)',
+            delete: 'rgba(226, 0, 0, 0.46)'
         },
         font: {
             family: {
@@ -28,7 +30,9 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
-            text: 'rgba(0, 0, 0, 0.78)'
+            text: 'rgba(0, 0, 0, 0.78)',
+            subtle: 'rgba(0, 0, 0, 0.41)',
+            delete: 'rgba(226, 0, 0, 0.46)'
         },
         font: {
             family: {
