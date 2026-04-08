@@ -5,6 +5,7 @@ import { SessionProvider } from '@/contexts/SessionContext';
 import RouteLayout from '../components/RouteLayout';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const queryClient = new QueryClient();
 
@@ -19,17 +20,19 @@ export default function Root() {
   if (!fontsLoaded) return null;
 
   return (
-    <SessionProvider>
-      <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-          <SafeAreaProvider>
-            <SafeAreaView style={{ flex:1, backgroundColor: "rgb(255, 255, 255)",}}>
-                <RouteLayout/>
-                <Toast />
-            </SafeAreaView>
-          </SafeAreaProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </SessionProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SessionProvider>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <SafeAreaProvider>
+              <SafeAreaView style={{ flex:1, backgroundColor: "rgb(255, 255, 255)",}}>
+                  <RouteLayout/>
+                  <Toast />
+              </SafeAreaView>
+            </SafeAreaProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </SessionProvider>
+    </GestureHandlerRootView>
   );
 }

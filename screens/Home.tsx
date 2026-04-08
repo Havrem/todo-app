@@ -3,19 +3,28 @@ import { Bookmarked } from "@/components/home/Bookmarked";
 import { Categories } from "@/components/home/Categories";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { scheduleOnRN } from 'react-native-worklets';
 
 export function Home() {
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme])
+    const [editMode, setEditMode] = useState(false);
+
+    const exitTap = Gesture.Tap().onEnd(() => {
+        scheduleOnRN(setEditMode, false);
+    })
 
     return (
-        <ScrollView style={styles.container}>
-            <Header text="HOME" />
-            <Bookmarked />
-            <Categories />
-        </ScrollView>
+        <GestureDetector gesture={exitTap}>
+            <ScrollView style={styles.container}>
+                <Header text="HOME" />
+                <Bookmarked />
+                <Categories editMode={editMode} setEditMode={setEditMode}/>
+            </ScrollView>
+        </GestureDetector>
     );
 }
 

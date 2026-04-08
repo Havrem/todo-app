@@ -8,7 +8,7 @@ import { Title } from "../basics/ActiveTitle";
 import { CategoryCard } from "../cards/CategoryCard";
 import { router } from "expo-router";
 
-export function Categories() {
+export function Categories({ editMode, setEditMode }: {editMode: boolean, setEditMode: (v: boolean) => void}) {
   const { theme } = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -27,7 +27,7 @@ export function Categories() {
         showsHorizontalScrollIndicator={false}
       >
         {categories?.map((category) => (
-          <CategoryCard key={category.id} category={category} />
+          <CategoryCard key={category.id} category={category} editMode={editMode} onLongPress={() => setEditMode(true)}/>
         ))}
       </ScrollView>
     </View>
