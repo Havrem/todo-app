@@ -1,14 +1,14 @@
 import { Header } from "@/components/basics/Header";
 import { Bookmarked } from "@/components/home/Bookmarked";
 import { Categories } from "@/components/home/Categories";
-import { Theme, themes } from "@/constants/themes";
+import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 export function Home() {
     const { theme } = useTheme();
-    const styles = useMemo(() => makeStyles(theme), [themes])
+    const styles = useMemo(() => makeStyles(theme), [theme])
 
     return (
         <ScrollView style={styles.container}>

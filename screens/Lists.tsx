@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 
 export function Lists() {
     const { theme } = useTheme();
-    const styles = useMemo(() => makeStyles(theme), [themes])
+    const styles = useMemo(() => makeStyles(theme), [theme])
 
     return (
         <View style={styles.container}>

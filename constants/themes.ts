@@ -23,14 +23,14 @@ export const themes = {
             }
         },
         category: {
-            backgroundColor: '#c90b61',
+            gradient: ['#024223', '#e0f4de'] as const,
             iconColor: '#FAF9F6',
             nameColor: '#FAF9F6'
         }
     },
     forest: {
         colors: {
-            background: '#114c01',
+            background: '#02361c',
             content: '#EDE6DC',
             frame: '#DBD1B5',
             icon: '#6E3409',
@@ -52,7 +52,36 @@ export const themes = {
             }
         },
         category: {
-            backgroundColor: '#fddeec',
+            gradient: ['rgb(0, 69, 44)', '#e0ebda'] as const,
+            iconColor: '#FAF9F6',
+            nameColor: '#FAF9F6'
+        }
+    },
+    winter: {
+        colors: {
+            background: '#19303a',
+            content: '#EDE6DC',
+            frame: '#DBD1B5',
+            icon: '#6E3409',
+            accent: '#FAF9F6',
+            text: 'rgba(0, 0, 0, 0.78)',
+            subtle: 'rgba(0, 0, 0, 0.41)',
+            delete: 'rgba(226, 0, 0, 0.46)'
+        },
+        font: {
+            family: {
+                heading: 'Glory-Bold',
+                button: 'Glory-Medium',
+                body: 'Glory-Light'
+            },
+            size: {
+                large: 21,
+                medium: 17,
+                small: 13
+            }
+        },
+        category: {
+            gradient: ['#fb64009c', '#d3dbea'] as const,
             iconColor: '#FAF9F6',
             nameColor: '#FAF9F6'
         }

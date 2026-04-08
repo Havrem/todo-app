@@ -1,2 +1,2 @@
-import { DeleteAccount } from "@/screens/DeleteAccount";
+import { DeleteAccount } from "@/screens/Settings/DeleteAccount";
 export default DeleteAccount;

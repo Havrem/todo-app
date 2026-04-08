@@ -34,6 +34,7 @@ export function Settings() {
             <View style={styles.content}>
                 <EmailDisplay email={user.email} theme={theme} styles={styles} />
                 <Button text="Change password" icon={<MaterialCommunityIcons name='pencil-circle' />} onPress={() => router.push('/change-password')} />
+                <Button text="Switch theme" icon={<MaterialCommunityIcons name='palette' />} onPress={() => router.push('/switch-theme')} />
                 <Button text="Delete account" icon={<MaterialCommunityIcons name='delete' />} onPress={() => router.push('/delete-account')} />
                 <View style={{ marginTop: 'auto' }}>
                     <Button text="Logout" icon={<Ionicons name='log-out' />} onPress={() => signOut()} />
