@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createList, deleteList, getList, getLists, updateList } from '@/api/list';
 import { UpdateListInput } from '@/schemas/list';
+import { router } from 'expo-router';
 
 export function useLists() {
     return useQuery({
@@ -22,8 +23,9 @@ export function useCreateList() {
 
     return useMutation({
         mutationFn: createList,
-        onSuccess: () => {
+        onSuccess: (newList) => {
             queryClient.invalidateQueries({ queryKey: ['lists'] });
+            router.push(`/list/${newList.id}`);
         },
     });
 }

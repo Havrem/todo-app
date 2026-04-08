@@ -4,32 +4,51 @@ import { Header } from "@/components/basics/Header";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCategories } from "@/hooks/useCategories";
-import { useLists } from "@/hooks/useLists";
+import { useCreateList, useLists } from "@/hooks/useLists";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useMemo } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { useMemo, useState } from "react";
+import { ScrollView, StyleSheet, TextInput, View } from "react-native";
 
 export function Lists() {
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
     const { data: lists } = useLists();
     const { data: categories } = useCategories();
+    const { mutate: createList } = useCreateList();
+
+    const [ search, setSearch ] = useState('');
+
+    const matches = (title: string) => title.toLocaleLowerCase().includes(search.toLowerCase());
 
     return (
-        <View style={styles.container}>
-            {/* <Header text="LISTS" /> */}
-            <ScrollView contentContainerStyle={styles.content}>
+        <ScrollView style={styles.container} automaticallyAdjustKeyboardInsets>
+            <View style={styles.content}>
                 <Header text="LISTS" />
+
+                <View style={styles.section}>
+                    <View style={styles.searchbar}>
+                        <TextInput
+                            value={search}
+                            onChangeText={setSearch}
+                            placeholder="..."
+                            style={{ flex: 1}}
+                        />
+                        <Ionicons name="search" size={20} color={theme.colors.text}/>
+                    </View>
+                </View>
+
                 {categories?.map((category) => {
-                    const inCategory = lists?.filter((l) => l.categoryId === category.id) ?? [];
+                    const inCategory = lists?.filter((l) => l.categoryId === category.id && matches(l.title)) ?? [];
+
+                    if (search && inCategory.length === 0) return null;
 
                     return (
                         <View key={category.id} style={styles.section}>
                             <Title
                                 text={category.name}
                                 icon={<Ionicons name="add-circle" />}
-                                onPress={() => console.log('Pressed group icon.')}
+                                onPress={() => createList({ title: 'New list...', categoryId: category.id })}
                             />
                             {inCategory.map((list) => (
                                 <Button
@@ -42,8 +61,8 @@ export function Lists() {
                         </View>
                     );
                 })}
-            </ScrollView>
-        </View>
+            </View>
+        </ScrollView>
     );
 }
 
@@ -55,9 +74,6 @@ const makeStyles = (t: Theme) => {
             flex: 1,
         },
         content: {
-            // backgroundColor: t.colors.content,
-            // padding: 10,
-            // paddingVertical: 15,
             flex: 1,
             gap: 0
         },
@@ -67,6 +83,15 @@ const makeStyles = (t: Theme) => {
             paddingVertical: 20,
             gap: 10,
             marginBottom: 10
+        },
+        searchbar: {
+            backgroundColor: t.colors.accent,
+            paddingHorizontal: 15,
+            paddingVertical: 15,
+            borderRadius: 5,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between'
         }
     })
 }

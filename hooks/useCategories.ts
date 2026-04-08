@@ -45,7 +45,6 @@ export function useDeleteCategory() {
     return useMutation({
         mutationFn: deleteCategory,
         onSuccess: () => {
-            // cascade affects lists too
             queryClient.invalidateQueries({ queryKey: ['categories'] });
             queryClient.invalidateQueries({ queryKey: ['lists'] });
         },
