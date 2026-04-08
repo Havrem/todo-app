@@ -24,7 +24,7 @@ export function Bookmarked() {
           key={list.id}
           text={list.title}
           icon={<Ionicons name="chevron-forward" />}
-          onPress={() => {}}
+          onPress={() => router.push(`/list/${list.id}`)}
         />
       ))}
     </View>

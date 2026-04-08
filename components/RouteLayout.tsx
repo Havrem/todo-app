@@ -10,6 +10,7 @@ export default function RouteLayout() {
         <Stack screenOptions={{headerShown: false}}>
             <Stack.Protected guard={!!token}>
                 <Stack.Screen name="(tabs)"/>
+                <Stack.Screen name="list/[id]"/>
                 <Stack.Screen name="change-password"/>
                 <Stack.Screen name="delete-account"/>
             </Stack.Protected>
