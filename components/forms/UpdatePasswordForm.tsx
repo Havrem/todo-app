@@ -8,8 +8,10 @@ import { Button } from "../basics/Button";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useMemo } from "react";
 import { Theme } from "@/constants/themes";
+import { useTranslation } from "react-i18next";
 
 export function UpdatePasswordForm() {
+    const { t } = useTranslation('common');
     const { mutate: changePassword } = useChangePassword();
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
@@ -99,7 +101,7 @@ export function UpdatePasswordForm() {
         </View>
 
         <View style={styles.bottom}>
-          <Button text="Update" onPress={handleSubmit(onSubmit)}/>
+          <Button text={t('update')} onPress={handleSubmit(onSubmit)}/>
         </View>
       </>
     );
