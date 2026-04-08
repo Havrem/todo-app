@@ -1,0 +1,9 @@
+{
+  "login": "LOGIN",
+  "register": "REGISTER",
+  "letsGo": "Let's go!",
+  "form": {
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password"
+  }
+}

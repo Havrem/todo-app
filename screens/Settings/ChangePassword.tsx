@@ -9,14 +9,14 @@ import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, View } from "react-native";
 
 export function ChangePassword() {
-    const { t } = useTranslation();
+    const { t } = useTranslation('changePassword');
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
 
     return (
         <View style={styles.container}>
             <Header
-                text="CHANGE PASSWORD"
+                text={t('title')}
                 left={
                     <Pressable onPress={() => router.back()}>
                         <Ionicons name="chevron-back" size={24} color="#555" />

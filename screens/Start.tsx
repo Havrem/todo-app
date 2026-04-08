@@ -1,12 +1,14 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import logo from "../assets/logo.png";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LoginForm } from "@/components/forms/LoginForm";
 import { RegisterForm } from "@/components/forms/RegisterForm";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Theme } from "@/constants/themes";
 
 export default function Start() {
+  const { t } = useTranslation('start');
   const [activeSelection, setActiveSelection] = useState('login');
 
   const { theme } = useTheme();
@@ -18,10 +20,10 @@ export default function Start() {
       <View style={styles.authContainer}>
         <View style={styles.selector}>
           <Pressable style={[styles.selectorBtn, activeSelection == 'login' && styles.active]} onPress={() => setActiveSelection('login')}>
-            <Text style={styles.selectorText}>LOGIN</Text>
+            <Text style={styles.selectorText}>{t('login')}</Text>
           </Pressable>
           <Pressable style={[styles.selectorBtn, activeSelection == 'register' && styles.active]} onPress={() => setActiveSelection('register')}>
-            <Text style={styles.selectorText}>REGISTER</Text>
+            <Text style={styles.selectorText}>{t('register')}</Text>
           </Pressable>
         </View>
         {activeSelection == 'login' ? <LoginForm/> : <RegisterForm/>}

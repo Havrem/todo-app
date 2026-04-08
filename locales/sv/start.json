@@ -1,0 +1,9 @@
+{
+  "login": "LOGGA IN",
+  "register": "REGISTRERA",
+  "letsGo": "Kör igång!",
+  "form": {
+    "emailPlaceholder": "E-post",
+    "passwordPlaceholder": "Lösenord"
+  }
+}

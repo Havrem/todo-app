@@ -3,9 +3,11 @@ import { LoginData, loginSchema } from "@/schemas/auth";
 import { Entypo } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export function LoginForm() {
+    const { t } = useTranslation('start');
     const { mutate: login } = useLogin();
 
     const {
@@ -34,7 +36,7 @@ export function LoginForm() {
               <View style={styles.formInputContainer}>
                 {errors.email && <Entypo name="info-with-circle" size={20} color="red" />}
                 <TextInput
-                    placeholder="Email"
+                    placeholder={t('form.emailPlaceholder')}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     autoCapitalize="none"
@@ -56,7 +58,7 @@ export function LoginForm() {
             render={({ field: { onChange, onBlur, value } }) => (
               <View style={styles.formInputContainer}>
                 <TextInput
-                    placeholder="Password"
+                    placeholder={t('form.passwordPlaceholder')}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     secureTextEntry
@@ -75,7 +77,7 @@ export function LoginForm() {
         </View>
         <View style={styles.bottomSection}>
           <Pressable style={styles.confirmBtn} onPress={handleSubmit(onSubmit)}>
-            <Text style={styles.confirmBtnText}>Let's go!</Text>
+            <Text style={styles.confirmBtnText}>{t('letsGo')}</Text>
           </Pressable>
         </View>
       </>

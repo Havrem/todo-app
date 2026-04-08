@@ -11,7 +11,7 @@ import { Theme } from "@/constants/themes";
 import { useTranslation } from "react-i18next";
 
 export function UpdatePasswordForm() {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation(['changePassword', 'common']);
     const { mutate: changePassword } = useChangePassword();
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
@@ -36,7 +36,7 @@ export function UpdatePasswordForm() {
                 render={({ field: { onChange, onBlur, value } }) => (
                 <View style={styles.input}>
                     <TextInput
-                        placeholder="Current password..."
+                        placeholder={t('form.currentPasswordPlaceholder')}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         secureTextEntry
@@ -59,7 +59,7 @@ export function UpdatePasswordForm() {
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View style={styles.input}>
                         <TextInput
-                            placeholder="New password..."
+                            placeholder={t('form.newPasswordPlaceholder')}
                             onBlur={onBlur}
                             onChangeText={onChange}
                             secureTextEntry
@@ -82,7 +82,7 @@ export function UpdatePasswordForm() {
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View style={styles.input}>
                         <TextInput
-                            placeholder="Confirm new password..."
+                            placeholder={t('form.confirmPasswordPlaceholder')}
                             onBlur={onBlur}
                             onChangeText={onChange}
                             secureTextEntry
@@ -101,7 +101,7 @@ export function UpdatePasswordForm() {
         </View>
 
         <View style={styles.bottom}>
-          <Button text={t('update')} onPress={handleSubmit(onSubmit)}/>
+          <Button text={t('common:update')} onPress={handleSubmit(onSubmit)}/>
         </View>
       </>
     );

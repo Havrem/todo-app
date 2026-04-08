@@ -8,9 +8,11 @@ import { useCreateList, useLists } from "@/hooks/useLists";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
 
 export function Lists() {
+    const { t } = useTranslation('lists');
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
     const { data: lists } = useLists();
@@ -24,14 +26,14 @@ export function Lists() {
     return (
         <ScrollView style={styles.container} automaticallyAdjustKeyboardInsets>
             <View style={styles.content}>
-                <Header text="LISTS" />
+                <Header text={t('title')} />
 
                 <View style={styles.section}>
                     <View style={styles.searchbar}>
                         <TextInput
                             value={search}
                             onChangeText={setSearch}
-                            placeholder="..."
+                            placeholder={t('searchPlaceholder')}
                             style={{ flex: 1}}
                         />
                         <Ionicons name="search" size={20} color={theme.colors.text}/>
@@ -48,7 +50,7 @@ export function Lists() {
                             <Title
                                 text={category.name}
                                 icon={<Ionicons name="add-circle" />}
-                                onPress={() => createList({ title: 'New list...', categoryId: category.id })}
+                                onPress={() => createList({ title: t('newListTitle'), categoryId: category.id })}
                             />
                             {inCategory.map((list) => (
                                 <Button

@@ -5,9 +5,11 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, View } from "react-native";
 
 export function SwitchTheme() {
+    const { t } = useTranslation(['switchTheme', 'common']);
     const { theme, themeName, setTheme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -21,7 +23,7 @@ export function SwitchTheme() {
     return (
         <View style={styles.container}>
             <Header
-                text="SWITCH THEME"
+                text={t('title')}
                 left={
                     <Pressable onPress={() => router.back()}>
                         <Ionicons name="chevron-back" size={24} color="#555" />
@@ -44,7 +46,7 @@ export function SwitchTheme() {
                 </View>
             </View>
             <View style={styles.bottom}>
-                <Button text="Update" onPress={handleUpdate}/>
+                <Button text={t('common:update')} onPress={handleUpdate}/>
             </View>
         </View>
     );

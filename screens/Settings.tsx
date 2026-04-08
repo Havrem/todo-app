@@ -3,11 +3,12 @@ import { Header } from "@/components/basics/Header";
 import { Theme } from "@/constants/themes";
 import { useSession } from "@/contexts/SessionContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useDeleteAccount, useUser } from "@/hooks/useUser";
+import { useUser } from "@/hooks/useUser";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useMemo } from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type Styles = ReturnType<typeof makeStyles>;
 
@@ -21,6 +22,7 @@ function EmailDisplay({ email, theme, styles }: { email: string; theme: Theme; s
 }
 
 export function Settings() {
+    const { t } = useTranslation('settings');
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
     const { signOut } = useSession();
@@ -30,14 +32,15 @@ export function Settings() {
 
     return (
         <View style={styles.container}>
-            <Header text="SETTINGS" />
+            <Header text={t('title')} />
             <View style={styles.content}>
                 <EmailDisplay email={user.email} theme={theme} styles={styles} />
-                <Button text="Change password" icon={<MaterialCommunityIcons name='pencil-circle' />} onPress={() => router.push('/change-password')} />
-                <Button text="Switch theme" icon={<MaterialCommunityIcons name='palette' />} onPress={() => router.push('/switch-theme')} />
-                <Button text="Delete account" icon={<MaterialCommunityIcons name='delete' />} onPress={() => router.push('/delete-account')} />
+                <Button text={t('changePassword')} icon={<MaterialCommunityIcons name='pencil-circle' />} onPress={() => router.push('/change-password')} />
+                <Button text={t('changeLanguage')} icon={<Ionicons name='language' />} onPress={() => router.push('/switch-language')} />
+                <Button text={t('switchTheme')} icon={<MaterialCommunityIcons name='palette' />} onPress={() => router.push('/switch-theme')} />
+                <Button text={t('deleteAccount')} icon={<MaterialCommunityIcons name='delete' />} onPress={() => router.push('/delete-account')} />
                 <View style={{ marginTop: 'auto' }}>
-                    <Button text="Logout" icon={<Ionicons name='log-out' />} onPress={() => signOut()} />
+                    <Button text={t('logout')} icon={<Ionicons name='log-out' />} onPress={() => signOut()} />
                 </View>
             </View>
         </View>

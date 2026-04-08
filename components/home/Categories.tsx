@@ -3,12 +3,14 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useCategories } from "@/hooks/useCategories";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Title } from "../basics/ActiveTitle";
 import { CategoryCard } from "../cards/CategoryCard";
 import { router } from "expo-router";
 
 export function Categories({ editMode, setEditMode }: {editMode: boolean, setEditMode: (v: boolean) => void}) {
+  const { t } = useTranslation('home');
   const { theme } = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -17,7 +19,7 @@ export function Categories({ editMode, setEditMode }: {editMode: boolean, setEdi
   return (
     <View style={styles.container}>
       <Title
-        text="Categories"
+        text={t('categories')}
         icon={<MaterialCommunityIcons name="view-grid-plus" />}
         onPress={() => router.push('/create-category')}
       />

@@ -1,19 +1,32 @@
 import { Button } from "@/components/basics/Button";
 import { Header } from "@/components/basics/Header";
 import { Theme } from "@/constants/themes";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useDeleteAccount } from "@/hooks/useUser";
+import { resources } from "@/i18n";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, View } from "react-native";
 
-export function DeleteAccount() {
-    const { t } = useTranslation(['deleteAccount', 'common']);
+type Language = keyof typeof resources;
+
+const languageNames: Record<Language, string> = {
+    en: 'English',
+    sv: 'Svenska',
+};
+
+export function SwitchLanguage() {
+    const { t } = useTranslation(['switchTheme', 'common']);
     const { theme } = useTheme();
+    const { setLanguage } = useLanguage();
     const styles = useMemo(() => makeStyles(theme), [theme]);
-    const { mutate: deleteAccount } = useDeleteAccount();
+
+    const handleSelect = async (lng: Language) => {
+        await setLanguage(lng);
+        router.back();
+    };
 
     return (
         <View style={styles.container}>
@@ -25,10 +38,14 @@ export function DeleteAccount() {
                     </Pressable>
                 }
             />
-            <View style={styles.top}/>
-            <View style={styles.bottom}>
-                <Button text={t('common:cancel')} onPress={() => router.back()}/>
-                <Button text={t('common:delete')} backgroundColor={theme.colors.delete} onPress={() => deleteAccount()}/>
+            <View style={styles.top}>
+                {(Object.keys(resources) as Language[]).map((lng) => (
+                    <Button
+                        key={lng}
+                        text={languageNames[lng]}
+                        onPress={() => handleSelect(lng)}
+                    />
+                ))}
             </View>
         </View>
     );
@@ -45,12 +62,28 @@ const makeStyles = (t: Theme) => {
             padding: 10,
             backgroundColor: t.colors.content,
             flex: 1,
-            marginBottom: 10
+            marginBottom: 10,
+            gap: 10
         },
         bottom: {
             padding: 10,
             backgroundColor: t.colors.content,
             gap: 10
+        },
+        swatchRow: {
+            flexDirection: 'row',
+            gap: 15,
+            padding: 10,
+        },
+        swatch: {
+            width: 60,
+            height: 60,
+            borderRadius: 8,
+            margin: 5
+        },
+        swatchSelected: {
+            borderBottomWidth: 3,
+            borderColor: 'white'
         }
     })
 }

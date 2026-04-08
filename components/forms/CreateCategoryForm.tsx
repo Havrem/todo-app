@@ -8,10 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "../basics/Button";
 
 export function CreateCategoryForm() {
+    const { t } = useTranslation(['createCategory', 'common']);
     const { mutate: createCategory } = useCreateCategory();
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
@@ -37,7 +39,7 @@ export function CreateCategoryForm() {
                 render={({ field: { onChange, onBlur, value } }) => (
                 <View style={styles.input}>
                     <TextInput
-                        placeholder="Name..."
+                        placeholder={t('form.namePlaceholder')}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         value={value}
@@ -82,7 +84,7 @@ export function CreateCategoryForm() {
         </View>
 
         <View style={styles.bottom}>
-          <Button text="Create" onPress={handleSubmit(onSubmit)}/>
+          <Button text={t('common:create')} onPress={handleSubmit(onSubmit)}/>
         </View>
       </>
     );
