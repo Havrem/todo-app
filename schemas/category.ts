@@ -6,7 +6,15 @@ export const categorySchema = z.object({
     icon: z.string(),
 });
 
+export const createCategorySchema = categorySchema
+    .omit({ id: true })
+    .extend({
+        name: z.string().nonempty('Required'),
+        icon: z.string().nonempty('Pick an icon'),
+    });
+
+
 export type Category = z.infer<typeof categorySchema>;
 
-export type CreateCategoryInput = Pick<Category, 'name' | 'icon'>;
+export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
 export type UpdateCategoryInput = Partial<CreateCategoryInput>;

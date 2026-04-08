@@ -80,7 +80,7 @@ const makeStyles = (t: Theme) => {
         },
         swatchSelected: {
             borderWidth: 3,
-            borderColor: t.colors.accent,
+            borderColor: t.colors.icon,
         },
     })
 }

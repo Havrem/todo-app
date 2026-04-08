@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export function Title({ text, icon, size = 20, color = '#6E3409' } : {text: string, icon: React.ReactElement<any>, size?: number, color?: string}) {
+export function Title({ text, icon, size = 20, color = '#6E3409' , onPress} : {text: string, icon: React.ReactElement<any>, size?: number, color?: string, onPress: () => void}) {
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={onPress}>
             <Text style={styles.text}>{text}</Text>
             {icon && React.cloneElement(icon, { size: size, color: color})}
-        </View>
+        </Pressable>
     );
 }
 
