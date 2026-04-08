@@ -53,6 +53,7 @@ const makeStyles = (t: Theme) => {
         },
         content: {
             padding: 15,
+            paddingBottom: 25,
             backgroundColor: t.colors.content,
             gap: 10,
             flex: 1

@@ -123,10 +123,12 @@ const makeStyles = (t: Theme) => {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
-            backgroundColor: 'white',
             padding: 20,
-            borderRadius: 40,
-            gap: 10
+            marginHorizontal: 5,
+            gap: 10,
+            borderColor: 'black',
+            borderBottomWidth: 1,
+            // backgroundColor: t.colors.accentSubtle
         },
         txt: {
             fontFamily: t.font.family.body,

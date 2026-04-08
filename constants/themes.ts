@@ -6,6 +6,7 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
+            accentSubtle: '#faf9f67c', 
             text: 'rgba(0, 0, 0, 0.78)',
             subtle: 'rgba(0, 0, 0, 0.54)',
             delete: 'rgba(226, 0, 0, 0.46)'
@@ -23,7 +24,7 @@ export const themes = {
             }
         },
         category: {
-            gradient: ['#024223', '#e0f4de'] as const,
+            gradient: ['#3e8e68', '#f4dede48'] as const,
             iconColor: '#faf7f6',
             nameColor: '#FAF9F6'
         }
@@ -35,6 +36,7 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
+            accentSubtle: '#faf9f67c', 
             text: 'rgba(0, 0, 0, 0.78)',
             subtle: 'rgba(0, 0, 0, 0.41)',
             delete: 'rgba(226, 0, 0, 0.46)'
@@ -52,7 +54,7 @@ export const themes = {
             }
         },
         category: {
-            gradient: ['rgb(0, 69, 44)', '#e0ebda'] as const,
+            gradient: ['rgba(228, 171, 48, 0.45)', '#f6ebf0'] as const,
             iconColor: '#FAF9F6',
             nameColor: '#FAF9F6'
         }
@@ -64,6 +66,7 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
+            accentSubtle: '#faf9f67c', 
             text: 'rgba(0, 0, 0, 0.78)',
             subtle: 'rgba(0, 0, 0, 0.41)',
             delete: 'rgba(226, 0, 0, 0.46)'

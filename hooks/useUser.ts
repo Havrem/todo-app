@@ -45,6 +45,11 @@ export function useDeleteAccount() {
         onSuccess: async () => {
             queryClient.clear();
             await signOut();
+            Toast.show({
+                type: 'success',
+                text1: 'Account deleted.',
+                position: 'bottom',
+            });
         },
         onError: () => {
             Toast.show({

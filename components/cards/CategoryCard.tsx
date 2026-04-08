@@ -15,6 +15,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useDeleteCategory } from "@/hooks/useCategories";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export function CategoryCard({ category, editMode, onLongPress }: { category: Category, editMode: boolean, onLongPress: () => void }) {
     const { theme } = useTheme();
@@ -47,6 +48,7 @@ export function CategoryCard({ category, editMode, onLongPress }: { category: Ca
    return (
         <Animated.View style={wiggleStyle} shouldRasterizeIOS renderToHardwareTextureAndroid >
             <Pressable
+                onPress={() => router.push(`/category/${category.id}`)}
                 onLongPress={onLongPress}
                 delayLongPress={400}
                 style={styles.wrapper}

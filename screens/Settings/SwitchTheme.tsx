@@ -31,15 +31,15 @@ export function SwitchTheme() {
             <View style={styles.top }>
                 <View style={styles.swatchRow}>
                     {(Object.entries(themes) as [ThemeName, Theme][]).map(([name, t]) => (
-                        <Pressable
-                            key={name}
-                            onPress={() => setSelected(name)}
-                            style={[
-                                styles.swatch,
-                                { backgroundColor: t.colors.background },
-                                selected === name && styles.swatchSelected,
-                            ]}
-                        />
+                        <View key={name} style={[selected === name && styles.swatchSelected]}>
+                            <Pressable
+                                onPress={() => setSelected(name)}
+                                style={[
+                                    styles.swatch,
+                                    { backgroundColor: t.colors.background }
+                                ]}
+                            />
+                        </View>
                     ))}
                 </View>
             </View>
@@ -77,10 +77,11 @@ const makeStyles = (t: Theme) => {
             width: 60,
             height: 60,
             borderRadius: 8,
+            margin: 5
         },
         swatchSelected: {
-            borderWidth: 3,
-            borderColor: t.colors.icon,
-        },
+            borderBottomWidth: 3,
+            borderColor: 'white'
+        }
     })
 }
