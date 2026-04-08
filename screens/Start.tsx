@@ -73,7 +73,7 @@ const makeStyles = (t: Theme) => {
       },
       selectorText: {
         fontFamily: 'Glory-Bold',
-        fontSize: 20,
+        fontSize: 17,
         color: 'rgba(0, 0, 0, 0.51)',
         textAlign: 'center'
       }
