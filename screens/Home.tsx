@@ -4,18 +4,18 @@ import { Categories } from "@/components/home/Categories";
 import { Theme, themes } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export function Home() {
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [themes])
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Header text="HOME" />
             <Bookmarked />
             <Categories />
-        </View>
+        </ScrollView>
     );
 }
 

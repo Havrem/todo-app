@@ -14,8 +14,7 @@ export type ListItem = z.infer<typeof listItemSchema>;
 export const listSchema = z.object({
     id: z.string(),
     title: z.string(),
-    category: z.string(),
-    icon: z.string(),
+    categoryId: z.string(),
     bookmarked: z.boolean(),
     items: z.array(listItemSchema)
 });
@@ -30,5 +29,5 @@ export type ListSummary = z.infer<typeof listSummarySchema>;
 export type CreateItemInput = Pick<ListItem, 'type' | 'text'>;
 export type UpdateItemInput = Partial<Pick<ListItem, 'text' | 'isDone'>>;
 
-export type CreateListInput = Pick<List, 'title' | 'category' | 'icon'>;
-export type UpdateListInput = Partial<Pick<List, 'title' | 'category' | 'icon' | 'bookmarked'>>;
+export type CreateListInput = Pick<List, 'title' | 'categoryId'>;
+export type UpdateListInput = Partial<Pick<List, 'title' | 'categoryId' | 'bookmarked'>>;

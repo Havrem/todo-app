@@ -1,31 +1,30 @@
-import { useLists } from "@/hooks/useLists";
+import { useCategories } from "@/hooks/useCategories";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Button } from "../basics/Button";
 import { Title } from "../basics/Title";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useMemo } from "react";
 import { Theme } from "@/constants/themes";
+import { CategoryCard } from "../cards/CategoryCard";
 
 export function Categories() {
   const { theme } = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
 
-  const { data: lists } = useLists();
-
-  const bookmarked = lists?.filter((l) => l.bookmarked) ?? [];
+  const { data: categories } = useCategories();
 
   return (
     <View style={styles.container}>
       <Title text="Categories" icon={<MaterialCommunityIcons name="view-grid-plus" />} />
-      {bookmarked.map((list) => (
-        <Button
-          key={list.id}
-          text={list.title}
-          icon={<Ionicons name="chevron-forward" />}
-          onPress={() => {}}
-        />
-      ))}
+      <ScrollView contentContainerStyle={styles.list} horizontal showsHorizontalScrollIndicator={false}>
+          {categories?.map((category) => (
+          <CategoryCard
+            key={category.id}
+            category={category}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -39,5 +38,8 @@ const makeStyles = (t: Theme) => {
           gap: 10,
           marginBottom: 10
         },
+        list: {
+          gap: 10
+        }
     })
 }

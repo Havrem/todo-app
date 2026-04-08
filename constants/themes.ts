@@ -21,6 +21,11 @@ export const themes = {
                 medium: 17,
                 small: 13
             }
+        },
+        category: {
+            backgroundColor: '#c90b61',
+            iconColor: '#FAF9F6',
+            nameColor: '#FAF9F6'
         }
     },
     forest: {
@@ -45,6 +50,11 @@ export const themes = {
                 medium: 17,
                 small: 13
             }
+        },
+        category: {
+            backgroundColor: '#fddeec',
+            iconColor: '#FAF9F6',
+            nameColor: '#FAF9F6'
         }
     },
 }

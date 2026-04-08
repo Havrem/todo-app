@@ -6,6 +6,7 @@
 
 import cors from 'cors';
 import express, { Request, Response } from 'express';
+import type { Category } from '../schemas/category';
 import type { List, ListItem } from '../schemas/list';
 
 const app = express();
@@ -36,11 +37,12 @@ const requireAuth = (req: Request, res: Response): string | null => {
     return email;
 };
 
-const stripOwner = ({ owner, ...rest }: List & { owner: string }): List => rest;
+const stripOwner = <T extends { owner: string }>({ owner, ...rest }: T): Omit<T, 'owner'> => rest;
 
 // ---------- seed data ----------
 
 type User = { email: string; password: string };
+type StoredCategory = Category & { owner: string };
 type StoredList = List & { owner: string };
 
 const users: User[] = [
@@ -48,12 +50,23 @@ const users: User[] = [
     { email: 'def@gmail.com', password: 'def' },
 ];
 
+const shoppingId = newId();
+const recipesId = newId();
+const giftsId = newId();
+const travelId = newId();
+
+const categories: StoredCategory[] = [
+    { id: shoppingId, name: 'Shopping', icon: 'shopping', owner: 'a' },
+    { id: recipesId, name: 'Recipes', icon: 'food', owner: 'a' },
+    { id: giftsId, name: 'Gifts', icon: 'gifts', owner: 'a' },
+    { id: travelId, name: 'Travel', icon: 'travel', owner: 'a' },
+];
+
 const lists: StoredList[] = [
     {
         id: newId(),
         title: 'Weekly Shopping',
-        category: 'Shopping',
-        icon: 'bag',
+        categoryId: shoppingId,
         bookmarked: true,
         items: [
             { id: newId(), type: 'check', text: 'Milk', isDone: false },
@@ -64,8 +77,7 @@ const lists: StoredList[] = [
     {
         id: newId(),
         title: 'Carbonara',
-        category: 'Recipes',
-        icon: 'food',
+        categoryId: recipesId,
         bookmarked: false,
         items: [
             { id: newId(), type: 'bullet', text: '2 tbs butter', isDone: null },
@@ -77,8 +89,7 @@ const lists: StoredList[] = [
     {
         id: newId(),
         title: 'Wishlist',
-        category: 'Gifts',
-        icon: 'gift',
+        categoryId: giftsId,
         bookmarked: false,
         items: [
             { id: newId(), type: 'numbered', text: 'Pet', isDone: null },
@@ -91,8 +102,7 @@ const lists: StoredList[] = [
     {
         id: newId(),
         title: 'Destinations',
-        category: 'Travel',
-        icon: 'airplane',
+        categoryId: travelId,
         bookmarked: true,
         items: [
             { id: newId(), type: 'none', text: 'Rome', isDone: null },
@@ -157,12 +167,67 @@ app.delete('/users/me', (req, res) => {
     const userIdx = users.findIndex((u) => u.email === email);
     if (userIdx === -1) return res.status(404).end();
 
-    // delete all the user's lists too
+    // delete all the user's lists and categories too
     for (let i = lists.length - 1; i >= 0; i--) {
         if (lists[i].owner === email) lists.splice(i, 1);
     }
+    for (let i = categories.length - 1; i >= 0; i--) {
+        if (categories[i].owner === email) categories.splice(i, 1);
+    }
 
     users.splice(userIdx, 1);
+    res.status(204).end();
+});
+
+// ---------- categories ----------
+
+app.get('/categories', (req, res) => {
+    const email = requireAuth(req, res);
+    if (!email) return;
+    const mine = categories.filter((c) => c.owner === email).map(stripOwner);
+    res.json(mine);
+});
+
+app.post('/categories', (req, res) => {
+    const email = requireAuth(req, res);
+    if (!email) return;
+    const { name, icon } = req.body as { name: string; icon: string };
+    const category: StoredCategory = {
+        id: newId(),
+        name,
+        icon,
+        owner: email,
+    };
+    categories.push(category);
+    res.status(201).json(stripOwner(category));
+});
+
+app.patch('/categories/:id', (req, res) => {
+    const email = requireAuth(req, res);
+    if (!email) return;
+    const category = categories.find((c) => c.id === req.params.id && c.owner === email);
+    if (!category) return res.status(404).end();
+    const { name, icon } = req.body as Partial<{ name: string; icon: string }>;
+    if (name !== undefined) category.name = name;
+    if (icon !== undefined) category.icon = icon;
+    res.json(stripOwner(category));
+});
+
+app.delete('/categories/:id', (req, res) => {
+    const email = requireAuth(req, res);
+    if (!email) return;
+    const idx = categories.findIndex((c) => c.id === req.params.id && c.owner === email);
+    if (idx === -1) return res.status(404).end();
+
+    // cascade: delete all lists in this category
+    const categoryId = categories[idx].id;
+    for (let i = lists.length - 1; i >= 0; i--) {
+        if (lists[i].owner === email && lists[i].categoryId === categoryId) {
+            lists.splice(i, 1);
+        }
+    }
+
+    categories.splice(idx, 1);
     res.status(204).end();
 });
 
@@ -188,16 +253,19 @@ app.get('/lists/:id', (req, res) => {
 app.post('/lists', (req, res) => {
     const email = requireAuth(req, res);
     if (!email) return;
-    const { title, category, icon } = req.body as {
+    const { title, categoryId } = req.body as {
         title: string;
-        category: string;
-        icon: string;
+        categoryId: string;
     };
+
+    // category must exist and belong to the user
+    const category = categories.find((c) => c.id === categoryId && c.owner === email);
+    if (!category) return res.status(400).end();
+
     const list: StoredList = {
         id: newId(),
         title,
-        category,
-        icon,
+        categoryId,
         bookmarked: false,
         items: [],
         owner: email,
@@ -211,15 +279,18 @@ app.patch('/lists/:id', (req, res) => {
     if (!email) return;
     const list = lists.find((l) => l.id === req.params.id && l.owner === email);
     if (!list) return res.status(404).end();
-    const { title, category, icon, bookmarked } = req.body as Partial<{
+    const { title, categoryId, bookmarked } = req.body as Partial<{
         title: string;
-        category: string;
-        icon: string;
+        categoryId: string;
         bookmarked: boolean;
     }>;
+
+    if (categoryId !== undefined) {
+        const category = categories.find((c) => c.id === categoryId && c.owner === email);
+        if (!category) return res.status(400).end();
+        list.categoryId = categoryId;
+    }
     if (title !== undefined) list.title = title;
-    if (category !== undefined) list.category = category;
-    if (icon !== undefined) list.icon = icon;
     if (bookmarked !== undefined) list.bookmarked = bookmarked;
     res.json(stripOwner(list));
 });
