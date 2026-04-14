@@ -18,7 +18,7 @@ const languageNames: Record<Language, string> = {
 };
 
 export function SwitchLanguage() {
-    const { t } = useTranslation(['switchTheme', 'common']);
+    const { t } = useTranslation(['switchLanguage', 'common']);
     const { theme } = useTheme();
     const { setLanguage } = useLanguage();
     const styles = useMemo(() => makeStyles(theme), [theme]);

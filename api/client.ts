@@ -5,7 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 // Phone and Mac must be on the same Wi-Fi network.
 // If your Mac's LAN IP changes, update this value.
 export const api = axios.create({
-    baseURL: 'http://192.168.50.175:3001',
+    baseURL: 'http://localhost:3001',
     headers: {'Content-Type':'application/json'},
 });
 

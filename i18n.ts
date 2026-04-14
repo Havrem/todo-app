@@ -11,6 +11,7 @@ import enLists from './locales/en/lists.json';
 import enSettings from './locales/en/settings.json';
 import enStart from './locales/en/start.json';
 import enSwitchTheme from './locales/en/switchTheme.json';
+import enSwitchLanguage from './locales/en/switchLanguage.json';
 
 import svChangePassword from './locales/sv/changePassword.json';
 import svCommon from './locales/sv/common.json';
@@ -21,6 +22,7 @@ import svLists from './locales/sv/lists.json';
 import svSettings from './locales/sv/settings.json';
 import svStart from './locales/sv/start.json';
 import svSwitchTheme from './locales/sv/switchTheme.json';
+import svSwitchLanguage from './locales/sv/switchLanguage.json';
 
 export const defaultNS = 'common';
 
@@ -35,6 +37,7 @@ export const resources = {
         deleteAccount: enDeleteAccount,
         switchTheme: enSwitchTheme,
         createCategory: enCreateCategory,
+        switchLanguage: enSwitchLanguage
     },
     sv: {
         common: svCommon,
@@ -46,6 +49,7 @@ export const resources = {
         deleteAccount: svDeleteAccount,
         switchTheme: svSwitchTheme,
         createCategory: svCreateCategory,
+        switchLanguage: svSwitchLanguage
     },
 } as const;
 

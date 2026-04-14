@@ -24,14 +24,14 @@ export const themes = {
             }
         },
         category: {
-            gradient: ['#3e8e68', '#f4dede48'] as const,
+            gradient: ['#3e8e69ae', '#add5c133'] as const,
             iconColor: '#faf7f6',
             nameColor: '#FAF9F6'
         }
     },
     forest: {
         colors: {
-            background: '#02361c',
+            background: '#112d01',
             content: '#EDE6DC',
             frame: '#DBD1B5',
             icon: '#6E3409',
@@ -54,7 +54,7 @@ export const themes = {
             }
         },
         category: {
-            gradient: ['rgba(228, 171, 48, 0.45)', '#f6ebf0'] as const,
+            gradient: ['rgb(94, 140, 56)', '#d8efd9'] as const,
             iconColor: '#FAF9F6',
             nameColor: '#FAF9F6'
         }
@@ -84,9 +84,9 @@ export const themes = {
             }
         },
         category: {
-            gradient: ['#fb64009c', '#d3dbea'] as const,
+            gradient: ['#d7aa8c9c', '#d3dbea'] as const,
             iconColor: '#FAF9F6',
-            nameColor: '#FAF9F6'
+            nameColor: '#4d2d00'
         }
     },
 }

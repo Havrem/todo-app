@@ -71,7 +71,7 @@ export function CreateCategoryForm() {
                                         end={{ x: 1, y: 1 }}
                                         style={[styles.iconTile, selected && styles.iconTileSelected]}
                                     >
-                                        <Icon size={28} color={theme.colors.accent} />
+                                        <Icon size={28} color={theme.category.nameColor} />
                                     </LinearGradient>
                                 </Pressable>
                             );
