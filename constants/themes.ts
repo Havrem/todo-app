@@ -24,7 +24,7 @@ export const themes = {
             }
         },
         category: {
-            gradient: ['#3e8e69ae', '#add5c133'] as const,
+            gradient: ['#BC8D83', '#efe5e3'] as const,
             iconColor: '#faf7f6',
             nameColor: '#FAF9F6'
         }
