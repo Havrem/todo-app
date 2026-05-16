@@ -9,26 +9,22 @@ export type LoginData = z.infer<typeof loginSchema>;
 
 export const registerSchema = z.object({
     email: z.email('Invalid email'),
-    password: z.string().min(6, 'Must be at least 6 characters')
+    password: z.string().min(8, 'Must be at least 8 characters')
 });
 
 export type RegisterData = z.infer<typeof registerSchema>;
 
-export const loginResponse = z.object({
-    token: z.string()
+export const authResponse = z.object({
+    accessToken: z.string(),
+    userId: z.number(),
+    email: z.string(),
 });
 
-export type LoginResponse = z.infer<typeof loginResponse>;
-
-export const registerResponse = z.object({
-    token: z.string()
-});
-
-export type RegisterResponse = z.infer<typeof registerResponse>;
+export type AuthResponse = z.infer<typeof authResponse>;
 
 export const updatePasswordSchema = z.object({
     currentPassword: z.string().nonempty('Required'),
-    newPassword: z.string().min(6, 'Must be at least 6 characters'),
+    newPassword: z.string().min(8, 'Must be at least 8 characters'),
     confirmPassword: z.string().nonempty('Required'),
 }).refine((data) => data.newPassword === data.confirmPassword, {
     message: 'Passwords do not match',

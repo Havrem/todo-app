@@ -1,0 +1,10 @@
+{
+  "network": {
+    "title": "Can't reach server",
+    "body": "Check your connection"
+  },
+  "generic": {
+    "title": "Something went wrong",
+    "body": "Please try again"
+  }
+}

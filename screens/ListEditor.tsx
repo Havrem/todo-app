@@ -13,7 +13,7 @@ export function ListEditor() {
     const styles = useMemo(() => makeStyles(theme), [theme])
 
     const { id } = useLocalSearchParams<{ id: string }>();
-    const { data: list } = useList(id);
+    const { data: list } = useList(Number(id));
 
     if (!list) return null;
 

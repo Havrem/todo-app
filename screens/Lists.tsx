@@ -41,7 +41,7 @@ export function Lists() {
                 </View>
 
                 {categories?.map((category) => {
-                    const inCategory = lists?.filter((l) => l.categoryId === category.id && matches(l.title)) ?? [];
+                    const inCategory = lists?.filter((l) => l.category.id === category.id && matches(l.title)) ?? [];
 
                     if (search && inCategory.length === 0) return null;
 
@@ -50,7 +50,7 @@ export function Lists() {
                             <Title
                                 text={category.name}
                                 icon={<Ionicons name="add-circle" />}
-                                onPress={() => createList({ title: t('newListTitle'), categoryId: category.id })}
+                                onPress={() => createList({ title: t('newListTitle'), category: category.id })}
                             />
                             {inCategory.map((list) => (
                                 <Button

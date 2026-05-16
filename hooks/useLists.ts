@@ -10,7 +10,7 @@ export function useLists() {
     });
 }
 
-export function useList(id: string) {
+export function useList(id: number) {
     return useQuery({
         queryKey: ['lists', id],
         queryFn: () => getList(id),
@@ -30,7 +30,7 @@ export function useCreateList() {
     });
 }
 
-export function useUpdateList(id: string) {
+export function useUpdateList(id: number) {
     const queryClient = useQueryClient();
 
     return useMutation({

@@ -24,7 +24,7 @@ export function CreateCategoryForm() {
         formState: { errors },
     } = useForm<CreateCategoryInput>({
         resolver: zodResolver(createCategorySchema),
-        defaultValues: { name: '', icon: '' },
+        defaultValues: { name: '', icon: '', type: 'GENERAL' },
     })
 
     const onSubmit = (data : CreateCategoryInput) =>

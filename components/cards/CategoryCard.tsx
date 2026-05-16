@@ -60,7 +60,7 @@ export function CategoryCard({ category, editMode, onLongPress }: { category: Ca
                     style={styles.container}
                 >
                     {Icon && <Icon size={32} color={theme.category.nameColor} />}
-                    <Text style={styles.txt}>{category.name}</Text>
+                    <Text style={styles.txt} numberOfLines={1} ellipsizeMode="tail">{category.name}</Text>
                 </LinearGradient>
 
                 {editMode && (

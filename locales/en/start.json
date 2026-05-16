@@ -5,5 +5,15 @@
   "form": {
     "emailPlaceholder": "Email",
     "passwordPlaceholder": "Password"
+  },
+  "errors": {
+    "invalidCredentials": {
+      "title": "Invalid credentials",
+      "body": "Please try again"
+    },
+    "emailTaken": {
+      "title": "Registration failed",
+      "body": "That email may already be taken"
+    }
   }
 }

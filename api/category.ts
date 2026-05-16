@@ -7,8 +7,8 @@ export const getCategories = (): Promise<Category[]> =>
 export const createCategory = (input: CreateCategoryInput): Promise<Category> =>
     api.post<Category>('/categories', input).then((r) => r.data);
 
-export const updateCategory = (id: string, input: UpdateCategoryInput): Promise<Category> =>
+export const updateCategory = (id: number, input: UpdateCategoryInput): Promise<Category> =>
     api.patch<Category>(`/categories/${id}`, input).then((r) => r.data);
 
-export const deleteCategory = (id: string): Promise<void> =>
+export const deleteCategory = (id: number): Promise<void> =>
     api.delete(`/categories/${id}`).then(() => undefined);

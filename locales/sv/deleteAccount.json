@@ -1,3 +1,12 @@
 {
-  "title": "RADERA KONTO"
+  "title": "RADERA KONTO",
+  "success": {
+    "title": "Kontot har raderats."
+  },
+  "errors": {
+    "generic": {
+      "title": "Kunde inte radera kontot",
+      "body": "Försök igen"
+    }
+  }
 }

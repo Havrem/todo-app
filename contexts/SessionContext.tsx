@@ -26,7 +26,7 @@ export function SessionProvider({ children }: { children: React.ReactNode}) {
             setToken(stored);
             if (stored) {
                 try {
-                    await api.get('/users/profile');
+                    await api.get('/users/me');
                 } catch {
                     // 401 is handled by the response interceptor (signs out)
                 }

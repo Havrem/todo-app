@@ -28,7 +28,7 @@ export function useCreateCategory() {
     });
 }
 
-export function useUpdateCategory(id: string) {
+export function useUpdateCategory(id: number) {
     const queryClient = useQueryClient();
 
     return useMutation({

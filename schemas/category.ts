@@ -1,9 +1,12 @@
 import z from "zod";
 
+export const categoryType = z.enum(['GROCERY', 'RECIPES', 'GENERAL']);
+
 export const categorySchema = z.object({
-    id: z.string(),
+    id: z.number(),
     name: z.string(),
     icon: z.string(),
+    type: categoryType,
 });
 
 export const createCategorySchema = categorySchema
@@ -15,6 +18,7 @@ export const createCategorySchema = categorySchema
 
 
 export type Category = z.infer<typeof categorySchema>;
+export type CategoryType = z.infer<typeof categoryType>;
 
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
 export type UpdateCategoryInput = Partial<CreateCategoryInput>;

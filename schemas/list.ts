@@ -1,22 +1,25 @@
 import z from "zod";
+import { categorySchema } from "./category";
 
-export const itemType = z.enum(['bullet', 'check', 'numbered', 'none']);
+export const itemType = z.enum(['BULLET', 'CHECKED', 'NUMBERED', 'NONE']);
 
 export const listItemSchema = z.object({
-    id: z.string(),
+    id: z.number(),
+    itemListId: z.number(),
     type: itemType,
     text: z.string(),
-    isDone: z.boolean().nullable()
+    completed: z.boolean(),
 });
 
 export type ListItem = z.infer<typeof listItemSchema>;
+export type ItemType = z.infer<typeof itemType>;
 
 export const listSchema = z.object({
-    id: z.string(),
+    id: z.number(),
     title: z.string(),
-    categoryId: z.string(),
+    category: categorySchema,
     bookmarked: z.boolean(),
-    items: z.array(listItemSchema)
+    items: z.array(listItemSchema),
 });
 
 export type List = z.infer<typeof listSchema>;
@@ -26,8 +29,8 @@ export const listSummarySchema = listSchema
 
 export type ListSummary = z.infer<typeof listSummarySchema>;
 
-export type CreateItemInput = Pick<ListItem, 'type' | 'text'>;
-export type UpdateItemInput = Partial<Pick<ListItem, 'text' | 'isDone'>>;
+export type CreateItemInput = Pick<ListItem, 'type' | 'text' | 'completed' | 'itemListId'>;
+export type UpdateItemInput = Partial<Pick<ListItem, 'text' | 'completed' | 'type'>>;
 
-export type CreateListInput = Pick<List, 'title' | 'categoryId'>;
-export type UpdateListInput = Partial<Pick<List, 'title' | 'categoryId' | 'bookmarked'>>;
+export type CreateListInput = { title: string; category: number };
+export type UpdateListInput = Partial<{ title: string; category: number; bookmarked: boolean }>;

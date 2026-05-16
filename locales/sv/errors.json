@@ -1,0 +1,10 @@
+{
+  "network": {
+    "title": "Kan inte nå servern",
+    "body": "Kontrollera din anslutning"
+  },
+  "generic": {
+    "title": "Något gick fel",
+    "body": "Försök igen"
+  }
+}

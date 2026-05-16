@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { changePassword, deleteAccount, getUser } from '@/api/user';
 import { useSession } from '@/contexts/SessionContext';
+import { useApiErrorToast } from '@/hooks/useApiErrorToast';
 
 export function useUser() {
     const { token } = useSession();
@@ -15,30 +17,30 @@ export function useUser() {
 }
 
 export function useChangePassword() {
+    const { t } = useTranslation('changePassword');
+    const showError = useApiErrorToast();
+
     return useMutation({
         mutationFn: changePassword,
         onSuccess: () => {
             router.back();
             Toast.show({
                 type: 'success',
-                text1: 'Password changed',
+                text1: t('success.title'),
                 position: 'bottom',
             });
         },
-        onError: () => {
-            Toast.show({
-                type: 'error',
-                text1: 'Could not change password',
-                text2: 'Check your current password',
-                position: 'bottom',
-            });
-        },
+        onError: (error) => showError(error, {
+            byStatus: { 400: 'changePassword:errors.wrongCurrentPassword' },
+        }),
     });
 }
 
 export function useDeleteAccount() {
     const queryClient = useQueryClient();
     const { signOut } = useSession();
+    const { t } = useTranslation('deleteAccount');
+    const showError = useApiErrorToast();
 
     return useMutation({
         mutationFn: deleteAccount,
@@ -47,16 +49,12 @@ export function useDeleteAccount() {
             await signOut();
             Toast.show({
                 type: 'success',
-                text1: 'Account deleted.',
+                text1: t('success.title'),
                 position: 'bottom',
             });
         },
-        onError: () => {
-            Toast.show({
-                type: 'error',
-                text1: 'Could not delete account',
-                position: 'bottom',
-            });
-        },
+        onError: (error) => showError(error, {
+            fallback: 'deleteAccount:errors.generic',
+        }),
     });
 }

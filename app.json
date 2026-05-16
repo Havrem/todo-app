@@ -10,8 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alexepp.todo-app",
-      "appleTeamId": "JW8PZJKBLX"
+      "bundleIdentifier": "com.havrem.platewise",
+      "appleTeamId": "6KTMRLQ947"
     },
     "android": {
       "adaptiveIcon": {
@@ -20,7 +20,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.alexepp.todoapp"
+      "package": "com.havrem.platewise"
     },
     "web": {
       "output": "static",

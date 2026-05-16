@@ -5,5 +5,15 @@
   "form": {
     "emailPlaceholder": "E-post",
     "passwordPlaceholder": "Lösenord"
+  },
+  "errors": {
+    "invalidCredentials": {
+      "title": "Ogiltiga uppgifter",
+      "body": "Försök igen"
+    },
+    "emailTaken": {
+      "title": "Registrering misslyckades",
+      "body": "E-postadressen kanske redan används"
+    }
   }
 }

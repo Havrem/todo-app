@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "mock": "tsx mocks/server.ts",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -50,14 +49,9 @@
     "zod": "4.3.6"
   },
   "devDependencies": {
-    "@types/cors": "2.8.19",
-    "@types/express": "5.0.6",
     "@types/react": "~19.1.0",
-    "cors": "2.8.6",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
-    "express": "5.2.1",
-    "tsx": "4.21.0",
     "typescript": "~5.9.2"
   },
   "private": true

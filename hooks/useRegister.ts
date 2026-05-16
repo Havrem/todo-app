@@ -1,23 +1,19 @@
 import { useMutation } from '@tanstack/react-query';
 import { registerUser } from "@/api/auth";
-import Toast from 'react-native-toast-message';
 import { useSession } from "@/contexts/SessionContext";
+import { useApiErrorToast } from "@/hooks/useApiErrorToast";
 
 export function useRegister() {
     const { signIn } = useSession();
+    const showError = useApiErrorToast();
 
     return useMutation({
         mutationFn: registerUser,
-        onSuccess: async ({token}) => {
-            await signIn(token);
+        onSuccess: async ({accessToken}) => {
+            await signIn(accessToken);
         },
-        onError: () => {
-            Toast.show({
-                type: 'error',
-                text1: 'Registration failed',
-                text2: 'That email may already be taken',
-                position: 'bottom'
-            })
-        }
+        onError: (error) => showError(error, {
+            byStatus: { 409: 'start:errors.emailTaken' },
+        }),
     })
 }

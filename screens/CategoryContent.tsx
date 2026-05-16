@@ -16,12 +16,13 @@ export function CategoryContent() {
     const styles = useMemo(() => makeStyles(theme), [theme])
 
     const { id } = useLocalSearchParams<{ id: string }>();
+    const numericId = Number(id);
 
     const { data: categories } = useCategories();
     const { data: lists } = useLists();
-    
-    const category = categories?.find((c) => c.id === id);
-    const included = lists?.filter((l) => l.categoryId === id) ?? [];
+
+    const category = categories?.find((c) => c.id === numericId);
+    const included = lists?.filter((l) => l.category.id === numericId) ?? [];
 
     if (!category) return null;
 
