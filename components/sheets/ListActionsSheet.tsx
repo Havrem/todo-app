@@ -7,25 +7,32 @@ import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type Action = {
-    key: 'import' | 'rearrange' | 'invite' | 'type';
+    key: 'organize' | 'import' | 'category' | 'rearrange' | 'invite' | 'type';
     icon: keyof typeof MaterialCommunityIcons.glyphMap;
 };
 
 const ACTIONS: Action[] = [
+    { key: 'organize', icon: 'auto-fix' },
     { key: 'import', icon: 'import' },
+    { key: 'category', icon: 'folder-plus' },
     { key: 'rearrange', icon: 'arrange-bring-forward' },
     { key: 'type', icon: 'shape-outline' },
     { key: 'invite', icon: 'account-plus' },
 ];
 
 type Props = {
+    showOrganize?: boolean;
     onSelect: (key: Action['key']) => void;
 };
 
-export const ListActionsSheet = forwardRef<BottomSheetModal, Props>(({ onSelect }, ref) => {
+export const ListActionsSheet = forwardRef<BottomSheetModal, Props>(({ showOrganize = false, onSelect }, ref) => {
     const { t } = useTranslation('listEditor');
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
+    const actions = useMemo(
+        () => ACTIONS.filter((action) => showOrganize || action.key !== 'organize'),
+        [showOrganize],
+    );
 
     return (
         <BottomSheetModal
@@ -36,7 +43,7 @@ export const ListActionsSheet = forwardRef<BottomSheetModal, Props>(({ onSelect 
             )}
         >
             <BottomSheetView style={styles.content}>
-                {ACTIONS.map((action) => (
+                {actions.map((action) => (
                     <Pressable
                         key={action.key}
                         style={styles.row}

@@ -66,6 +66,7 @@ export function useReorderItem(listId: number) {
 function reorderInArray(items: ListItem[], movedId: number, input: ReorderItemInput): ListItem[] {
     const moving = items.find((i) => i.id === movedId);
     if (!moving) return items;
+    const moved = { ...moving, sectionId: input.sectionId };
     const without = items.filter((i) => i.id !== movedId);
     let insertIdx = without.length;
     if (input.nextId !== null) {
@@ -75,5 +76,5 @@ function reorderInArray(items: ListItem[], movedId: number, input: ReorderItemIn
         const idx = without.findIndex((i) => i.id === input.previousId);
         if (idx !== -1) insertIdx = idx + 1;
     }
-    return [...without.slice(0, insertIdx), moving, ...without.slice(insertIdx)];
+    return [...without.slice(0, insertIdx), moved, ...without.slice(insertIdx)];
 }

@@ -1,12 +1,29 @@
 {
   "actions": {
+    "organize": "Organize groceries",
     "import": "Import from list",
+    "category": "Add category",
     "rearrange": "Rearrange",
     "type": "Type",
     "invite": "Invite"
   },
   "imports": {
     "empty": "No other lists"
+  },
+  "sections": {
+    "new": "New category"
+  },
+  "organize": {
+    "errors": {
+      "unavailable": {
+        "title": "Only grocery lists",
+        "body": "Food sorting is available for grocery lists."
+      },
+      "failed": {
+        "title": "Could not organize",
+        "body": "Try again in a moment."
+      }
+    }
   },
   "types": {
     "general": "General",

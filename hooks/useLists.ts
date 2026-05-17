@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createList, deleteList, getList, getLists, importItems, reorderList, updateList } from '@/api/list';
+import { createList, deleteList, getList, getLists, importItems, organizeGroceryList, reorderList, updateList } from '@/api/list';
 import { ImportItemsInput, ListSummary, ReorderListInput, UpdateListInput } from '@/schemas/list';
 import { router } from 'expo-router';
+import { useApiErrorToast } from './useApiErrorToast';
 
 export function useLists() {
     return useQuery({
@@ -50,6 +51,28 @@ export function useImportItems(id: number) {
         onSuccess: (updatedList) => {
             queryClient.setQueryData(['lists', id], updatedList);
             queryClient.invalidateQueries({ queryKey: ['lists'] });
+        },
+    });
+}
+
+export function useOrganizeGroceryList(id: number) {
+    const queryClient = useQueryClient();
+    const showApiError = useApiErrorToast();
+
+    return useMutation({
+        mutationFn: () => organizeGroceryList(id),
+        onSuccess: (updatedList) => {
+            queryClient.setQueryData(['lists', id], updatedList);
+            queryClient.invalidateQueries({ queryKey: ['lists'] });
+        },
+        onError: (error) => {
+            showApiError(error, {
+                byStatus: {
+                    400: 'listEditor:organize.errors.unavailable',
+                    502: 'listEditor:organize.errors.failed',
+                },
+                fallback: 'listEditor:organize.errors.failed',
+            });
         },
     });
 }

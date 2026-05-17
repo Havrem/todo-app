@@ -16,6 +16,9 @@ export const updateList = (id: number, input: UpdateListInput): Promise<List> =>
 export const importItems = (id: number, input: ImportItemsInput): Promise<List> =>
     api.post<List>(`/item-lists/${id}/items/import`, input).then((r) => r.data);
 
+export const organizeGroceryList = (id: number): Promise<List> =>
+    api.post<List>(`/item-lists/${id}/sections/organize`).then((r) => r.data);
+
 export const deleteList = (id: number): Promise<void> =>
     api.delete(`/item-lists/${id}`).then(() => undefined);
 

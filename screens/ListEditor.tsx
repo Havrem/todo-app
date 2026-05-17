@@ -8,16 +8,19 @@ import { ListTypeSheet } from "@/components/sheets/ListTypeSheet";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCreateItem } from "@/hooks/useItems";
-import { useImportItems, useList, useLists, useUpdateList } from "@/hooks/useLists";
+import { useCreateListSection } from "@/hooks/useListSections";
+import { useImportItems, useList, useLists, useOrganizeGroceryList, useUpdateList } from "@/hooks/useLists";
 import { useListRealtime } from "@/hooks/useListRealtime";
 import { ItemType } from "@/schemas/list";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from "react-native";
 
 export function ListEditor() {
+    const { t } = useTranslation('listEditor');
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme])
 
@@ -27,7 +30,9 @@ export function ListEditor() {
     const { data: lists } = useLists();
     const { mutate: updateList } = useUpdateList(numericId);
     const { mutate: importItems } = useImportItems(numericId);
+    const { mutate: organizeGroceryList } = useOrganizeGroceryList(numericId);
     const { mutate: createItem } = useCreateItem(numericId);
+    const { mutate: createSection } = useCreateListSection(numericId);
 
     useListRealtime(numericId);
 
@@ -38,9 +43,11 @@ export function ListEditor() {
     const actionsSheetRef = useRef<BottomSheetModal>(null);
     const [editMode, setEditMode] = useState(false);
 
-    const onActionSelect = (key: 'import' | 'rearrange' | 'invite' | 'type') => {
+    const onActionSelect = (key: 'organize' | 'import' | 'category' | 'rearrange' | 'invite' | 'type') => {
         actionsSheetRef.current?.dismiss();
-        if (key === 'import') importItemsSheetRef.current?.present();
+        if (key === 'organize') organizeGroceryList();
+        else if (key === 'import') importItemsSheetRef.current?.present();
+        else if (key === 'category') createSection({ text: t('sections.new') });
         else if (key === 'rearrange') setEditMode(true);
         else if (key === 'invite') inviteSheetRef.current?.present();
         else listTypeSheetRef.current?.present();
@@ -81,7 +88,7 @@ export function ListEditor() {
                 }
             />
             <View style={styles.paper}>
-                <SortableItems items={list.items} listId={numericId} editMode={editMode} />
+                <SortableItems items={list.items} sections={list.sections} listId={numericId} editMode={editMode} />
                 {!editMode && (
                     <View style={styles.bottom}>
                         <Pressable
@@ -119,7 +126,11 @@ export function ListEditor() {
                     listTypeSheetRef.current?.dismiss();
                 }}
             />
-            <ListActionsSheet ref={actionsSheetRef} onSelect={onActionSelect} />
+            <ListActionsSheet
+                ref={actionsSheetRef}
+                showOrganize={list.type === 'GROCERY'}
+                onSelect={onActionSelect}
+            />
         </KeyboardAvoidingView>
     )
 }

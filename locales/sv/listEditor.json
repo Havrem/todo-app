@@ -1,12 +1,29 @@
 {
   "actions": {
+    "organize": "Sortera matvaror",
     "import": "Importera från lista",
+    "category": "Lägg till kategori",
     "rearrange": "Sortera om",
     "type": "Typ",
     "invite": "Bjud in"
   },
   "imports": {
     "empty": "Inga andra listor"
+  },
+  "sections": {
+    "new": "Ny kategori"
+  },
+  "organize": {
+    "errors": {
+      "unavailable": {
+        "title": "Bara matinköpslistor",
+        "body": "Matsortering fungerar för matinköpslistor."
+      },
+      "failed": {
+        "title": "Kunde inte sortera",
+        "body": "Försök igen om en stund."
+      }
+    }
   },
   "types": {
     "general": "Allmänt",
