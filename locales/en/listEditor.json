@@ -1,8 +1,12 @@
 {
   "actions": {
+    "import": "Import from list",
     "rearrange": "Rearrange",
     "type": "Type",
     "invite": "Invite"
+  },
+  "imports": {
+    "empty": "No other lists"
   },
   "types": {
     "general": "General",

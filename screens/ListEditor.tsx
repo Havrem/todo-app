@@ -1,5 +1,6 @@
 import { EditableHeader } from "@/components/basics/EditableHeader";
 import { SortableItems } from "@/components/cards/SortableItems";
+import { ImportItemsSheet } from "@/components/sheets/ImportItemsSheet";
 import { InviteSheet } from "@/components/sheets/InviteSheet";
 import { ItemTypeSheet } from "@/components/sheets/ItemTypeSheet";
 import { ListActionsSheet } from "@/components/sheets/ListActionsSheet";
@@ -7,7 +8,7 @@ import { ListTypeSheet } from "@/components/sheets/ListTypeSheet";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCreateItem } from "@/hooks/useItems";
-import { useList, useUpdateList } from "@/hooks/useLists";
+import { useImportItems, useList, useLists, useUpdateList } from "@/hooks/useLists";
 import { useListRealtime } from "@/hooks/useListRealtime";
 import { ItemType } from "@/schemas/list";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -23,20 +24,24 @@ export function ListEditor() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const numericId = Number(id);
     const { data: list } = useList(numericId);
+    const { data: lists } = useLists();
     const { mutate: updateList } = useUpdateList(numericId);
+    const { mutate: importItems } = useImportItems(numericId);
     const { mutate: createItem } = useCreateItem(numericId);
 
     useListRealtime(numericId);
 
     const typeSheetRef = useRef<BottomSheetModal>(null);
+    const importItemsSheetRef = useRef<BottomSheetModal>(null);
     const listTypeSheetRef = useRef<BottomSheetModal>(null);
     const inviteSheetRef = useRef<BottomSheetModal>(null);
     const actionsSheetRef = useRef<BottomSheetModal>(null);
     const [editMode, setEditMode] = useState(false);
 
-    const onActionSelect = (key: 'rearrange' | 'invite' | 'type') => {
+    const onActionSelect = (key: 'import' | 'rearrange' | 'invite' | 'type') => {
         actionsSheetRef.current?.dismiss();
-        if (key === 'rearrange') setEditMode(true);
+        if (key === 'import') importItemsSheetRef.current?.present();
+        else if (key === 'rearrange') setEditMode(true);
         else if (key === 'invite') inviteSheetRef.current?.present();
         else listTypeSheetRef.current?.present();
     };
@@ -97,6 +102,15 @@ export function ListEditor() {
                 }}
             />
             <InviteSheet ref={inviteSheetRef} listId={numericId} />
+            <ImportItemsSheet
+                ref={importItemsSheetRef}
+                currentListId={numericId}
+                lists={lists ?? []}
+                onSelect={(sourceListId) => {
+                    importItems({ sourceListId });
+                    importItemsSheetRef.current?.dismiss();
+                }}
+            />
             <ListTypeSheet
                 ref={listTypeSheetRef}
                 selected={list.type}

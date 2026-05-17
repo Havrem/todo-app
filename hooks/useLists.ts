@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createList, deleteList, getList, getLists, reorderList, updateList } from '@/api/list';
-import { ListSummary, ReorderListInput, UpdateListInput } from '@/schemas/list';
+import { createList, deleteList, getList, getLists, importItems, reorderList, updateList } from '@/api/list';
+import { ImportItemsInput, ListSummary, ReorderListInput, UpdateListInput } from '@/schemas/list';
 import { router } from 'expo-router';
 
 export function useLists() {
@@ -38,6 +38,18 @@ export function useUpdateList(id: number) {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['lists'] });
             queryClient.invalidateQueries({ queryKey: ['lists', id] });
+        },
+    });
+}
+
+export function useImportItems(id: number) {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (input: ImportItemsInput) => importItems(id, input),
+        onSuccess: (updatedList) => {
+            queryClient.setQueryData(['lists', id], updatedList);
+            queryClient.invalidateQueries({ queryKey: ['lists'] });
         },
     });
 }

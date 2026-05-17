@@ -1,8 +1,12 @@
 {
   "actions": {
+    "import": "Importera från lista",
     "rearrange": "Sortera om",
     "type": "Typ",
     "invite": "Bjud in"
+  },
+  "imports": {
+    "empty": "Inga andra listor"
   },
   "types": {
     "general": "Allmänt",

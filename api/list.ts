@@ -1,4 +1,4 @@
-import type { CreateListInput, List, ListSummary, UpdateListInput, ReorderListInput } from '@/schemas/list';
+import type { CreateListInput, ImportItemsInput, List, ListSummary, UpdateListInput, ReorderListInput } from '@/schemas/list';
 import { api } from './client';
 
 export const getLists = (): Promise<ListSummary[]> =>
@@ -12,6 +12,9 @@ export const createList = (input: CreateListInput): Promise<List> =>
 
 export const updateList = (id: number, input: UpdateListInput): Promise<List> =>
     api.patch<List>(`/item-lists/${id}`, input).then((r) => r.data);
+
+export const importItems = (id: number, input: ImportItemsInput): Promise<List> =>
+    api.post<List>(`/item-lists/${id}/items/import`, input).then((r) => r.data);
 
 export const deleteList = (id: number): Promise<void> =>
     api.delete(`/item-lists/${id}`).then(() => undefined);

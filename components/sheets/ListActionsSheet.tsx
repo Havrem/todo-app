@@ -7,11 +7,12 @@ import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type Action = {
-    key: 'rearrange' | 'invite' | 'type';
+    key: 'import' | 'rearrange' | 'invite' | 'type';
     icon: keyof typeof MaterialCommunityIcons.glyphMap;
 };
 
 const ACTIONS: Action[] = [
+    { key: 'import', icon: 'import' },
     { key: 'rearrange', icon: 'arrange-bring-forward' },
     { key: 'type', icon: 'shape-outline' },
     { key: 'invite', icon: 'account-plus' },
