@@ -6,5 +6,9 @@
   "generic": {
     "title": "Something went wrong",
     "body": "Please try again"
+  },
+  "sessionExpired": {
+    "title": "Session expired",
+    "body": "Please log in again"
   }
 }

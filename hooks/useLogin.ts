@@ -9,8 +9,8 @@ export function useLogin() {
 
     return useMutation({
         mutationFn: loginUser,
-        onSuccess: async ({accessToken}) => {
-            await signIn(accessToken);
+        onSuccess: async ({accessToken, refreshToken}) => {
+            await signIn(accessToken, refreshToken);
         },
         onError: (error) => showError(error, {
             byStatus: { 401: 'start:errors.invalidCredentials' },

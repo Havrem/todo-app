@@ -9,8 +9,8 @@ export function useRegister() {
 
     return useMutation({
         mutationFn: registerUser,
-        onSuccess: async ({accessToken}) => {
-            await signIn(accessToken);
+        onSuccess: async ({accessToken, refreshToken}) => {
+            await signIn(accessToken, refreshToken);
         },
         onError: (error) => showError(error, {
             byStatus: { 409: 'start:errors.emailTaken' },

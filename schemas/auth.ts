@@ -16,6 +16,7 @@ export type RegisterData = z.infer<typeof registerSchema>;
 
 export const authResponse = z.object({
     accessToken: z.string(),
+    refreshToken: z.string(),
     userId: z.number(),
     email: z.string(),
 });

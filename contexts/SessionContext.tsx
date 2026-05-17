@@ -1,12 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
-import { api, setUnauthorizedHandler } from "@/api/client";
+import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 import { router } from "expo-router";
+import { api, setUnauthorizedHandler } from "@/api/client";
+import { logoutUser } from "@/api/auth";
+
+const ACCESS_TOKEN_KEY = 'token';
+const REFRESH_TOKEN_KEY = 'refreshToken';
 
 type SessionContextType = {
     token: string | null;
     isLoading: boolean;
-    signIn: (token: string) => Promise<void>,
+    signIn: (accessToken: string, refreshToken: string) => Promise<void>,
     signOut: () => Promise<void>;
 }
 
@@ -19,36 +25,59 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: { children: React.ReactNode}) {
+    const { t } = useTranslation('errors');
     const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        SecureStore.getItemAsync('token').then(async (stored) => {
+        SecureStore.getItemAsync(ACCESS_TOKEN_KEY).then(async (stored) => {
             setToken(stored);
             if (stored) {
                 try {
                     await api.get('/users/me');
                 } catch {
-                    // 401 is handled by the response interceptor (signs out)
+                    // 401 is handled by the response interceptor (refresh-then-signout)
                 }
             }
             setIsLoading(false);
         });
     }, []);
 
-    const signIn = async (newToken: string) => {
-        await SecureStore.setItemAsync('token', newToken);
-        setToken(newToken);
+    const signIn = async (accessToken: string, refreshToken: string) => {
+        await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, accessToken);
+        await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, refreshToken);
+        setToken(accessToken);
     }
 
-    const signOut = async () => {
-        await SecureStore.deleteItemAsync('token');
+    const clearSession = async () => {
+        await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+        await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
         setToken(null);
         router.replace('/start');
     }
 
+    const signOut = async () => {
+        const refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+        if (refreshToken) {
+            try {
+                await logoutUser(refreshToken);
+            } catch {
+                // best-effort; clear local state regardless
+            }
+        }
+        await clearSession();
+    }
+
     useEffect(() => {
-        setUnauthorizedHandler(signOut);
+        setUnauthorizedHandler(async () => {
+            await clearSession();
+            Toast.show({
+                type: 'error',
+                text1: t('sessionExpired.title'),
+                text2: t('sessionExpired.body'),
+                position: 'bottom',
+            });
+        });
     }, []);
 
     return (

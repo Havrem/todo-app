@@ -6,5 +6,9 @@
   "generic": {
     "title": "Något gick fel",
     "body": "Försök igen"
+  },
+  "sessionExpired": {
+    "title": "Sessionen har gått ut",
+    "body": "Logga in igen"
   }
 }
