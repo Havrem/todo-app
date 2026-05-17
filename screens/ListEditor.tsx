@@ -1,20 +1,21 @@
 import { EditableHeader } from "@/components/basics/EditableHeader";
 import { SortableItems } from "@/components/cards/SortableItems";
+import { InviteSheet } from "@/components/sheets/InviteSheet";
 import { ItemTypeSheet } from "@/components/sheets/ItemTypeSheet";
+import { ListActionsSheet } from "@/components/sheets/ListActionsSheet";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCreateItem } from "@/hooks/useItems";
 import { useList, useUpdateList } from "@/hooks/useLists";
+import { useListRealtime } from "@/hooks/useListRealtime";
 import { ItemType } from "@/schemas/list";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from "react-native";
 
 export function ListEditor() {
-    const { t } = useTranslation('common');
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme])
 
@@ -24,8 +25,18 @@ export function ListEditor() {
     const { mutate: updateList } = useUpdateList(numericId);
     const { mutate: createItem } = useCreateItem(numericId);
 
-    const sheetRef = useRef<BottomSheetModal>(null);
+    useListRealtime(numericId);
+
+    const typeSheetRef = useRef<BottomSheetModal>(null);
+    const inviteSheetRef = useRef<BottomSheetModal>(null);
+    const actionsSheetRef = useRef<BottomSheetModal>(null);
     const [editMode, setEditMode] = useState(false);
+
+    const onActionSelect = (key: 'rearrange' | 'invite') => {
+        actionsSheetRef.current?.dismiss();
+        if (key === 'rearrange') setEditMode(true);
+        else inviteSheetRef.current?.present();
+    };
 
     if (!list) return null;
 
@@ -48,9 +59,17 @@ export function ListEditor() {
                     </Pressable>
                 }
                 right={
-                    <Pressable onPress={() => setEditMode((v) => !v)}>
-                        {editMode ? <MaterialCommunityIcons name="check" size={22} color={theme.colors.icon} /> : <MaterialCommunityIcons name="arrange-bring-forward" size={22} color={theme.colors.icon} />}
-                    </Pressable>
+                    editMode
+                        ? (
+                            <Pressable onPress={() => setEditMode(false)}>
+                                <MaterialCommunityIcons name="check" size={22} color={theme.colors.icon} />
+                            </Pressable>
+                        )
+                        : (
+                            <Pressable onPress={() => actionsSheetRef.current?.present()}>
+                                <MaterialCommunityIcons name="dots-horizontal" size={22} color={theme.colors.icon} />
+                            </Pressable>
+                        )
                 }
             />
             <View style={styles.paper}>
@@ -59,7 +78,7 @@ export function ListEditor() {
                     <View style={styles.bottom}>
                         <Pressable
                             onPress={() => addItem(inheritedType)}
-                            onLongPress={() => sheetRef.current?.present()}
+                            onLongPress={() => typeSheetRef.current?.present()}
                             style={styles.addBtn}
                         >
                             <Ionicons name="add-circle" size={32} color={theme.colors.icon}/>
@@ -68,12 +87,14 @@ export function ListEditor() {
                 )}
             </View>
             <ItemTypeSheet
-                ref={sheetRef}
+                ref={typeSheetRef}
                 onSelect={(type) => {
                     addItem(type);
-                    sheetRef.current?.dismiss();
+                    typeSheetRef.current?.dismiss();
                 }}
             />
+            <InviteSheet ref={inviteSheetRef} listId={numericId} />
+            <ListActionsSheet ref={actionsSheetRef} onSelect={onActionSelect} />
         </KeyboardAvoidingView>
     )
 }
@@ -100,11 +121,6 @@ const makeStyles = (t: Theme) => {
             backgroundColor: t.colors.accent,
             padding: 10,
             borderRadius: 40,
-        },
-        toggle: {
-            fontFamily: t.font.family.button,
-            fontSize: 15,
-            color: '#555',
         },
     })
 }

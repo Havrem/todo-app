@@ -63,7 +63,7 @@ export function CategoryCard({ category, editMode, onLongPress }: { category: Ca
                     <Text style={styles.txt} numberOfLines={1} ellipsizeMode="tail">{category.name}</Text>
                 </LinearGradient>
 
-                {editMode && (
+                {editMode && category.kind !== 'SHARED' && (
                     <Pressable
                         onPress={() => deleteCategory(category.id)}
                         hitSlop={10}

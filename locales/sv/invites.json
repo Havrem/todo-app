@@ -1,0 +1,7 @@
+{
+  "title": "INBJUDNINGAR",
+  "empty": "Inga väntande inbjudningar",
+  "accept": "Acceptera",
+  "decline": "Avböj",
+  "invitedBy": "Inbjuden av {{email}}"
+}

@@ -1,4 +1,4 @@
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 type IconProps = { size: number; color: string };
 type IconRenderer = (props: IconProps) => React.JSX.Element;
@@ -12,6 +12,7 @@ export const IconRegistry = {
     gifts: (p: IconProps) => <MaterialCommunityIcons name="gift" {...p} />,
     fitness: (p: IconProps) => <MaterialCommunityIcons name="dumbbell" {...p} />,
     collections: (p: IconProps) => <MaterialIcons name="collections" {...p} />,
+    shared: (p: IconProps) => <FontAwesome5 name="user-friends" {...p} />,
 } satisfies Record<string, IconRenderer>;
 
 export type IconKey = keyof typeof IconRegistry;

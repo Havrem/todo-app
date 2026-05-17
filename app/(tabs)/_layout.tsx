@@ -1,8 +1,11 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useInviteRealtime } from '@/hooks/useInviteRealtime';
 
 // Screens in this folder should behave like tabs
 export default function TabLayout() {
+  useInviteRealtime();
+
   return (
     <Tabs
       screenOptions={{

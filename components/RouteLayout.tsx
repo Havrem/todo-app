@@ -13,6 +13,7 @@ export default function RouteLayout() {
                 <Stack.Screen name="list/[id]"/>
                 <Stack.Screen name="change-password"/>
                 <Stack.Screen name="delete-account"/>
+                <Stack.Screen name="invites"/>
             </Stack.Protected>
             <Stack.Protected guard={!token}>
                 <Stack.Screen name="start"/>

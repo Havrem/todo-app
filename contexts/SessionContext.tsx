@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { router } from "expo-router";
-import { api, setUnauthorizedHandler } from "@/api/client";
+import { api, setTokenRefreshedHandler, setUnauthorizedHandler } from "@/api/client";
 import { logoutUser } from "@/api/auth";
 
 const ACCESS_TOKEN_KEY = 'token';
@@ -77,6 +77,10 @@ export function SessionProvider({ children }: { children: React.ReactNode}) {
                 text2: t('sessionExpired.body'),
                 position: 'bottom',
             });
+        });
+
+        setTokenRefreshedHandler((accessToken) => {
+            setToken(accessToken);
         });
     }, []);
 

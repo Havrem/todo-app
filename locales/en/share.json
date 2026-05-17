@@ -1,0 +1,21 @@
+{
+  "title": "Share with",
+  "emailPlaceholder": "Email address ...",
+  "inviteSent": {
+    "title": "Invite sent"
+  },
+  "received": {
+    "title": "Invite received",
+    "body": "Tap to view"
+  },
+  "errors": {
+    "userNotFound": {
+      "title": "User not found",
+      "body": "No account with that email"
+    },
+    "alreadyMember": {
+      "title": "Already a member",
+      "body": "That user can already access this list"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "title": "INVITES",
+  "empty": "No pending invites",
+  "accept": "Accept",
+  "decline": "Decline",
+  "invitedBy": "Invited by {{email}}"
+}

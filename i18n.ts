@@ -9,9 +9,12 @@ import enDeleteAccount from './locales/en/deleteAccount.json';
 import enEditCategory from './locales/en/editCategory.json';
 import enErrors from './locales/en/errors.json';
 import enHome from './locales/en/home.json';
+import enInvites from './locales/en/invites.json';
 import enItemTypes from './locales/en/itemTypes.json';
+import enListEditor from './locales/en/listEditor.json';
 import enLists from './locales/en/lists.json';
 import enSettings from './locales/en/settings.json';
+import enShare from './locales/en/share.json';
 import enStart from './locales/en/start.json';
 import enSwitchTheme from './locales/en/switchTheme.json';
 import enSwitchLanguage from './locales/en/switchLanguage.json';
@@ -23,9 +26,12 @@ import svDeleteAccount from './locales/sv/deleteAccount.json';
 import svEditCategory from './locales/sv/editCategory.json';
 import svErrors from './locales/sv/errors.json';
 import svHome from './locales/sv/home.json';
+import svInvites from './locales/sv/invites.json';
 import svItemTypes from './locales/sv/itemTypes.json';
+import svListEditor from './locales/sv/listEditor.json';
 import svLists from './locales/sv/lists.json';
 import svSettings from './locales/sv/settings.json';
+import svShare from './locales/sv/share.json';
 import svStart from './locales/sv/start.json';
 import svSwitchTheme from './locales/sv/switchTheme.json';
 import svSwitchLanguage from './locales/sv/switchLanguage.json';
@@ -46,7 +52,10 @@ export const resources = {
         editCategory: enEditCategory,
         switchLanguage: enSwitchLanguage,
         errors: enErrors,
-        itemTypes: enItemTypes
+        itemTypes: enItemTypes,
+        listEditor: enListEditor,
+        share: enShare,
+        invites: enInvites
     },
     sv: {
         common: svCommon,
@@ -61,7 +70,10 @@ export const resources = {
         editCategory: svEditCategory,
         switchLanguage: svSwitchLanguage,
         errors: svErrors,
-        itemTypes: svItemTypes
+        itemTypes: svItemTypes,
+        listEditor: svListEditor,
+        share: svShare,
+        invites: svInvites
     },
 } as const;
 
@@ -69,7 +81,7 @@ i18n.use(initReactI18next).init({
     resources,
     lng: Localization.getLocales()[0]?.languageCode ?? 'en',
     fallbackLng: 'en',
-    ns: ['common', 'start', 'home', 'lists', 'settings', 'changePassword', 'deleteAccount', 'switchTheme', 'createCategory', 'editCategory', 'errors', 'itemTypes'],
+    ns: ['common', 'start', 'home', 'lists', 'settings', 'changePassword', 'deleteAccount', 'switchTheme', 'createCategory', 'editCategory', 'errors', 'itemTypes', 'listEditor', 'share', 'invites'],
     defaultNS,
     interpolation: { escapeValue: false },
     compatibilityJSON: 'v4',

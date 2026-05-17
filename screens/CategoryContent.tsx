@@ -25,6 +25,8 @@ export function CategoryContent() {
 
     if (!category) return null;
 
+    const isShared = category.kind === 'SHARED';
+
     return (
         <View style={styles.container}>
             <Header
@@ -34,16 +36,18 @@ export function CategoryContent() {
                     </Pressable>
                 }
                 text={category.name}
-                right={<FontAwesome name="edit" size={22} color={theme.colors.icon} />}
-                onRightPress={() => router.push(`/category/${category.id}/edit`)}
+                right={isShared ? undefined : <FontAwesome name="edit" size={22} color={theme.colors.icon} />}
+                onRightPress={isShared ? undefined : () => router.push(`/category/${category.id}/edit`)}
             />
             <View style={styles.content}>
                 <SortableLists lists={included} />
-                <View style={styles.bottom}>
-                    <Pressable onPress={() => createList({title: 'New List...', category: category.id})} style={styles.addBtn}>
-                        <Ionicons name="add-circle" size={32} color={theme.colors.icon}/>
-                    </Pressable>
-                </View>
+                {!isShared && (
+                    <View style={styles.bottom}>
+                        <Pressable onPress={() => createList({title: 'New List...', category: category.id})} style={styles.addBtn}>
+                            <Ionicons name="add-circle" size={32} color={theme.colors.icon}/>
+                        </Pressable>
+                    </View>
+                )}
             </View>
         </View>
     )

@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "../basics/Button";
 
+const PICKABLE_ICONS = (Object.keys(IconRegistry) as IconKey[]).filter((key) => key !== 'shared');
+
 export function CreateCategoryForm() {
     const { t } = useTranslation(['createCategory', 'common']);
     const { mutate: createCategory } = useCreateCategory();
@@ -57,13 +59,14 @@ export function CreateCategoryForm() {
                 rules={{ required: true }}
                 render={({ field: { onChange, value } }) => (
                     <View style={styles.iconGrid}>
-                        {(Object.keys(IconRegistry) as IconKey[]).map((key) => {
+                        {PICKABLE_ICONS.map((key) => {
                             const Icon = IconRegistry[key];
                             const selected = value === key;
                             return (
                                 <Pressable
                                     key={key}
                                     onPress={() => onChange(key)}
+                                    style={styles.iconCell}
                                 >
                                     <LinearGradient
                                         colors={theme.category.gradient}
@@ -129,11 +132,12 @@ const makeStyles = (t: Theme) => {
         iconGrid: {
             flexDirection: 'row',
             flexWrap: 'wrap',
-            gap: 10,
             paddingVertical: 10,
-            justifyContent: 'space-between',
-            // borderColor: 'red',
-            // borderWidth: 1
+            rowGap: 10,
+        },
+        iconCell: {
+            width: '25%',
+            alignItems: 'center',
         },
         iconTile: {
             width: 64,

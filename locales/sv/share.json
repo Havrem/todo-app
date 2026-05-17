@@ -1,0 +1,21 @@
+{
+  "title": "Dela med",
+  "emailPlaceholder": "E-postadress ...",
+  "inviteSent": {
+    "title": "Inbjudan skickad"
+  },
+  "received": {
+    "title": "Inbjudan mottagen",
+    "body": "Tryck för att visa"
+  },
+  "errors": {
+    "userNotFound": {
+      "title": "Användaren hittades inte",
+      "body": "Inget konto med den e-postadressen"
+    },
+    "alreadyMember": {
+      "title": "Redan medlem",
+      "body": "Den användaren har redan åtkomst till listan"
+    }
+  }
+}

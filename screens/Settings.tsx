@@ -16,7 +16,6 @@ function EmailDisplay({ email, theme, styles }: { email: string; theme: Theme; s
     return (
         <Pressable style={styles.emailBtn} onPress={() => console.log('Email display pressed')}>
             <Text style={styles.emailTxt}>{email}</Text>
-            <MaterialCommunityIcons name="email" size={20} color={theme.colors.icon} />
         </Pressable>
     );
 }
@@ -35,6 +34,7 @@ export function Settings() {
             <Header text={t('title')} />
             <View style={styles.content}>
                 <EmailDisplay email={user.email} theme={theme} styles={styles} />
+                <Button text={t('invites')} icon={<Ionicons name='mail-unread' />} onPress={() => router.push('/invites' as never)} />
                 <Button text={t('changePassword')} icon={<MaterialCommunityIcons name='pencil-circle' />} onPress={() => router.push('/change-password')} />
                 <Button text={t('changeLanguage')} icon={<Ionicons name='language' />} onPress={() => router.push('/switch-language')} />
                 <Button text={t('switchTheme')} icon={<MaterialCommunityIcons name='palette' />} onPress={() => router.push('/switch-theme')} />
@@ -69,7 +69,7 @@ const makeStyles = (t: Theme) => {
             padding: 15,
             borderRadius: 10,
             borderColor: 'black',
-            borderBottomWidth: 1
+            borderBottomWidth: 1,
         },
         emailTxt: {
             fontFamily: t.font.family.body,

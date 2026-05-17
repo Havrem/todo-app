@@ -1,8 +1,9 @@
 import '@/i18n';
 import { useFonts } from 'expo-font';
-import Toast from 'react-native-toast-message';
+import Toast, { BaseToast, ToastConfig } from 'react-native-toast-message';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SessionProvider } from '@/contexts/SessionContext';
+import { RealtimeProvider } from '@/contexts/RealtimeContext';
 import RouteLayout from '../components/RouteLayout';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@/contexts/ThemeContext';
@@ -11,6 +12,16 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const queryClient = new QueryClient();
+const toastConfig: ToastConfig = {
+  invite: ({ text1, text2, onPress }) => (
+    <BaseToast
+      text1={text1}
+      text2={text2}
+      onPress={onPress}
+      style={{ borderLeftColor: '#E56AA6' }}
+    />
+  ),
+};
 
 // This file structures the app layout
 export default function Root() {
@@ -29,12 +40,14 @@ export default function Root() {
           <ThemeProvider>
             <LanguageProvider>
               <QueryClientProvider client={queryClient}>
-                <SafeAreaProvider>
-                  <SafeAreaView style={{ flex:1, backgroundColor: "rgb(255, 255, 255)",}}>
-                      <RouteLayout/>
-                      <Toast />
-                  </SafeAreaView>
-                </SafeAreaProvider>
+                <RealtimeProvider>
+                  <SafeAreaProvider>
+                    <SafeAreaView style={{ flex:1, backgroundColor: "rgb(255, 255, 255)",}}>
+                        <RouteLayout/>
+                        <Toast config={toastConfig} />
+                    </SafeAreaView>
+                  </SafeAreaProvider>
+                </RealtimeProvider>
               </QueryClientProvider>
             </LanguageProvider>
           </ThemeProvider>

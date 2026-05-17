@@ -26,9 +26,14 @@ api.interceptors.request.use(async (config) => {
 
 // Lets SessionContext register a handler that runs when refresh fails (user must re-login).
 let onUnauthorized: (() => void) | null = null;
+let onTokenRefreshed: ((accessToken: string) => void) | null = null;
 
 export const setUnauthorizedHandler = (handler: () => void) => {
     onUnauthorized = handler;
+};
+
+export const setTokenRefreshedHandler = (handler: (accessToken: string) => void) => {
+    onTokenRefreshed = handler;
 };
 
 // Single-flight: if a refresh is in flight, all callers share the same promise.
@@ -43,6 +48,7 @@ async function refreshSession(): Promise<string> {
         const response = await refreshAccessToken(refreshToken);
         await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, response.accessToken);
         await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, response.refreshToken);
+        onTokenRefreshed?.(response.accessToken);
         return response.accessToken;
     })().finally(() => {
         refreshPromise = null;
