@@ -38,6 +38,8 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
+            accentMedium: '#d8efd9',
+            accentStrong: '#112d01',
             accentSubtle: '#faf9f67c', 
             text: 'rgba(0, 0, 0, 0.78)',
             subtle: 'rgba(0, 0, 0, 0.41)',
@@ -68,6 +70,8 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
+            accentMedium: '#d3dbea',
+            accentStrong: '#19303a',
             accentSubtle: '#faf9f67c', 
             text: 'rgba(0, 0, 0, 0.78)',
             subtle: 'rgba(0, 0, 0, 0.41)',
@@ -94,4 +98,4 @@ export const themes = {
 }
 
 export type ThemeName = keyof typeof themes; // Instead of writing export type ThemeName = 'default' | 'forest' prevents drift. Used for knowing which themes are okay to set.
-export type Theme = typeof themes.default // Faster way to explain what a theme looks like, also prevents drift.
+export type Theme = (typeof themes)[ThemeName] // Faster way to explain what a theme looks like, also prevents drift.

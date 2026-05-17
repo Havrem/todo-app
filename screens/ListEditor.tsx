@@ -3,6 +3,7 @@ import { SortableItems } from "@/components/cards/SortableItems";
 import { InviteSheet } from "@/components/sheets/InviteSheet";
 import { ItemTypeSheet } from "@/components/sheets/ItemTypeSheet";
 import { ListActionsSheet } from "@/components/sheets/ListActionsSheet";
+import { ListTypeSheet } from "@/components/sheets/ListTypeSheet";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCreateItem } from "@/hooks/useItems";
@@ -28,14 +29,16 @@ export function ListEditor() {
     useListRealtime(numericId);
 
     const typeSheetRef = useRef<BottomSheetModal>(null);
+    const listTypeSheetRef = useRef<BottomSheetModal>(null);
     const inviteSheetRef = useRef<BottomSheetModal>(null);
     const actionsSheetRef = useRef<BottomSheetModal>(null);
     const [editMode, setEditMode] = useState(false);
 
-    const onActionSelect = (key: 'rearrange' | 'invite') => {
+    const onActionSelect = (key: 'rearrange' | 'invite' | 'type') => {
         actionsSheetRef.current?.dismiss();
         if (key === 'rearrange') setEditMode(true);
-        else inviteSheetRef.current?.present();
+        else if (key === 'invite') inviteSheetRef.current?.present();
+        else listTypeSheetRef.current?.present();
     };
 
     if (!list) return null;
@@ -94,6 +97,14 @@ export function ListEditor() {
                 }}
             />
             <InviteSheet ref={inviteSheetRef} listId={numericId} />
+            <ListTypeSheet
+                ref={listTypeSheetRef}
+                selected={list.type}
+                onSelect={(type) => {
+                    updateList({ type });
+                    listTypeSheetRef.current?.dismiss();
+                }}
+            />
             <ListActionsSheet ref={actionsSheetRef} onSelect={onActionSelect} />
         </KeyboardAvoidingView>
     )

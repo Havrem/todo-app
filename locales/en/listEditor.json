@@ -1,6 +1,12 @@
 {
   "actions": {
     "rearrange": "Rearrange",
+    "type": "Type",
     "invite": "Invite"
+  },
+  "types": {
+    "general": "General",
+    "grocery": "Grocery",
+    "recipes": "Recipes"
   }
 }

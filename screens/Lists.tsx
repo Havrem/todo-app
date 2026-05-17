@@ -50,7 +50,7 @@ export function Lists() {
                             <Title
                                 text={category.name}
                                 icon={<Ionicons name="add-circle" />}
-                                onPress={() => createList({ title: t('newListTitle'), category: category.id })}
+                                onPress={() => createList({ title: t('newListTitle'), category: category.id, type: 'GENERAL' })}
                             />
                             {inCategory.map((list) => (
                                 <SwipeableListRow

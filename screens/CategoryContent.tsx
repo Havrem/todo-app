@@ -43,7 +43,7 @@ export function CategoryContent() {
                 <SortableLists lists={included} />
                 {!isShared && (
                     <View style={styles.bottom}>
-                        <Pressable onPress={() => createList({title: 'New List...', category: category.id})} style={styles.addBtn}>
+                        <Pressable onPress={() => createList({title: 'New List...', category: category.id, type: 'GENERAL'})} style={styles.addBtn}>
                             <Ionicons name="add-circle" size={32} color={theme.colors.icon}/>
                         </Pressable>
                     </View>

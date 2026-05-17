@@ -27,14 +27,13 @@ export function EditCategoryForm({ category }: { category: Category }) {
         formState: { errors, dirtyFields },
     } = useForm<UpdateCategoryFormData>({
         resolver: zodResolver(updateCategorySchema),
-        defaultValues: { name: category.name, icon: category.icon, type: category.type },
+        defaultValues: { name: category.name, icon: category.icon },
     })
 
     const onSubmit = (data: UpdateCategoryFormData) => {
         const patch: UpdateCategoryInput = {};
         if (dirtyFields.name) patch.name = data.name;
         if (dirtyFields.icon) patch.icon = data.icon;
-        if (dirtyFields.type) patch.type = data.type;
 
         if (Object.keys(patch).length === 0) {
             router.back();

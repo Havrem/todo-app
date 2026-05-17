@@ -1,6 +1,12 @@
 {
   "actions": {
     "rearrange": "Sortera om",
+    "type": "Typ",
     "invite": "Bjud in"
+  },
+  "types": {
+    "general": "Allmänt",
+    "grocery": "Matinköp",
+    "recipes": "Recept"
   }
 }
