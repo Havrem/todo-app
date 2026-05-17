@@ -5,5 +5,7 @@
   "cancel": "Avbryt",
   "delete": "Radera",
   "back": "Tillbaka",
-  "loading": "Laddar..."
+  "loading": "Laddar...",
+  "edit": "Redigera",
+  "done": "Klar"
 }

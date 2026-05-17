@@ -9,6 +9,7 @@ import enDeleteAccount from './locales/en/deleteAccount.json';
 import enEditCategory from './locales/en/editCategory.json';
 import enErrors from './locales/en/errors.json';
 import enHome from './locales/en/home.json';
+import enItemTypes from './locales/en/itemTypes.json';
 import enLists from './locales/en/lists.json';
 import enSettings from './locales/en/settings.json';
 import enStart from './locales/en/start.json';
@@ -22,6 +23,7 @@ import svDeleteAccount from './locales/sv/deleteAccount.json';
 import svEditCategory from './locales/sv/editCategory.json';
 import svErrors from './locales/sv/errors.json';
 import svHome from './locales/sv/home.json';
+import svItemTypes from './locales/sv/itemTypes.json';
 import svLists from './locales/sv/lists.json';
 import svSettings from './locales/sv/settings.json';
 import svStart from './locales/sv/start.json';
@@ -43,7 +45,8 @@ export const resources = {
         createCategory: enCreateCategory,
         editCategory: enEditCategory,
         switchLanguage: enSwitchLanguage,
-        errors: enErrors
+        errors: enErrors,
+        itemTypes: enItemTypes
     },
     sv: {
         common: svCommon,
@@ -57,7 +60,8 @@ export const resources = {
         createCategory: svCreateCategory,
         editCategory: svEditCategory,
         switchLanguage: svSwitchLanguage,
-        errors: svErrors
+        errors: svErrors,
+        itemTypes: svItemTypes
     },
 } as const;
 
@@ -65,7 +69,7 @@ i18n.use(initReactI18next).init({
     resources,
     lng: Localization.getLocales()[0]?.languageCode ?? 'en',
     fallbackLng: 'en',
-    ns: ['common', 'start', 'home', 'lists', 'settings', 'changePassword', 'deleteAccount', 'switchTheme', 'createCategory', 'editCategory', 'errors'],
+    ns: ['common', 'start', 'home', 'lists', 'settings', 'changePassword', 'deleteAccount', 'switchTheme', 'createCategory', 'editCategory', 'errors', 'itemTypes'],
     defaultNS,
     interpolation: { escapeValue: false },
     compatibilityJSON: 'v4',

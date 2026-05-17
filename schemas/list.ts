@@ -36,3 +36,4 @@ export type CreateListInput = { title: string; category: number };
 export type UpdateListInput = Partial<{ title: string; category: number; bookmarked: boolean }>;
 
 export type ReorderListInput = { previousId: number | null, nextId: number | null }
+export type ReorderItemInput = { previousId: number | null, nextId: number | null }

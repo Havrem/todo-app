@@ -5,5 +5,7 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "back": "Back",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "edit": "Edit",
+  "done": "Done"
 }

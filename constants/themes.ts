@@ -7,6 +7,7 @@ export const themes = {
             icon: '#6E3409',
             accent: '#FAF9F6',
             accentMedium: '#eadba8',
+            accentStrong: '#40403f',
             accentSubtle: '#faf9f67c', 
             text: 'rgba(0, 0, 0, 0.78)',
             subtle: 'rgba(0, 0, 0, 0.54)',

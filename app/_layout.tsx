@@ -8,6 +8,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const queryClient = new QueryClient();
 
@@ -23,20 +24,22 @@ export default function Root() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SessionProvider>
-        <ThemeProvider>
-          <LanguageProvider>
-            <QueryClientProvider client={queryClient}>
-              <SafeAreaProvider>
-                <SafeAreaView style={{ flex:1, backgroundColor: "rgb(255, 255, 255)",}}>
-                    <RouteLayout/>
-                    <Toast />
-                </SafeAreaView>
-              </SafeAreaProvider>
-            </QueryClientProvider>
-          </LanguageProvider>
-        </ThemeProvider>
-      </SessionProvider>
+      <BottomSheetModalProvider>
+        <SessionProvider>
+          <ThemeProvider>
+            <LanguageProvider>
+              <QueryClientProvider client={queryClient}>
+                <SafeAreaProvider>
+                  <SafeAreaView style={{ flex:1, backgroundColor: "rgb(255, 255, 255)",}}>
+                      <RouteLayout/>
+                      <Toast />
+                  </SafeAreaView>
+                </SafeAreaProvider>
+              </QueryClientProvider>
+            </LanguageProvider>
+          </ThemeProvider>
+        </SessionProvider>
+      </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 }
