@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createList, deleteList, getList, getLists, updateList } from '@/api/list';
-import { UpdateListInput } from '@/schemas/list';
+import { createList, deleteList, getList, getLists, reorderList, updateList } from '@/api/list';
+import { ListSummary, ReorderListInput, UpdateListInput } from '@/schemas/list';
 import { router } from 'expo-router';
 
 export function useLists() {
@@ -51,4 +51,43 @@ export function useDeleteList() {
             queryClient.invalidateQueries({ queryKey: ['lists'] });
         },
     });
+}
+
+export function useReorderList() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ id, input }: { id: number; input: ReorderListInput }) =>
+            reorderList(id, input),
+        onMutate: async ({ id, input }) => {
+            await queryClient.cancelQueries({ queryKey: ['lists'] });
+            const previous = queryClient.getQueryData<ListSummary[]>(['lists']);
+            if (previous) {
+                queryClient.setQueryData<ListSummary[]>(['lists'], reorderInArray(previous, id, input));
+            }
+            return { previous };
+        },
+        onError: (_err, _vars, ctx) => {
+            if (ctx?.previous) queryClient.setQueryData(['lists'], ctx.previous);
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ['lists'] });
+        },
+    });
+}
+
+
+function reorderInArray(lists: ListSummary[], movedId: number, input: ReorderListInput): ListSummary[] {
+    const moving = lists.find((l) => l.id === movedId);
+    if (!moving) return lists;
+    const without = lists.filter((l) => l.id !== movedId);
+    let insertIdx = without.length;
+    if (input.nextId !== null) {
+        const idx = without.findIndex((l) => l.id === input.nextId);
+        if (idx !== -1) insertIdx = idx;
+    } else if (input.previousId !== null) {
+        const idx = without.findIndex((l) => l.id === input.previousId);
+        if (idx !== -1) insertIdx = idx + 1;
+    }
+    return [...without.slice(0, insertIdx), moving, ...without.slice(insertIdx)];
 }

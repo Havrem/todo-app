@@ -9,7 +9,13 @@ import ReanimatedSwipeable, { SwipeableMethods } from "react-native-gesture-hand
 
 const ACTION_WIDTH = 64;
 
-export function SwipeableListRow({ list, onPress }: { list: ListSummary, onPress: () => void }) {
+type Props = {
+    list: ListSummary,
+    onPress: () => void,
+    onLongPress?: () => void
+}
+
+export function SwipeableListRow({ list, onPress, onLongPress }: Props) {
     const { theme } = useTheme();
     const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -54,7 +60,7 @@ export function SwipeableListRow({ list, onPress }: { list: ListSummary, onPress
             activeOffsetX={[-5, 5]}
             containerStyle={{backgroundColor: theme.colors.accent, borderRadius: 5}}
         >
-            <Pressable style={styles.row} onPress={onPress} unstable_pressDelay={200}>
+            <Pressable style={styles.row} onPress={onPress} onLongPress={onLongPress} unstable_pressDelay={200}>
                 <Text style={styles.txt}>{list.title}</Text>
                 <Ionicons name="chevron-forward" size={25} color={theme.colors.icon} />
             </Pressable>

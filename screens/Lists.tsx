@@ -1,5 +1,4 @@
 import { Title } from "@/components/basics/ActiveTitle";
-import { Button } from "@/components/basics/Button";
 import { Header } from "@/components/basics/Header";
 import { SwipeableListRow } from "@/components/cards/SwipeableListRow";
 import { Theme } from "@/constants/themes";

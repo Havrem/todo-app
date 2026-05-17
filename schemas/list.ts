@@ -34,3 +34,5 @@ export type UpdateItemInput = Partial<Pick<ListItem, 'text' | 'completed' | 'typ
 
 export type CreateListInput = { title: string; category: number };
 export type UpdateListInput = Partial<{ title: string; category: number; bookmarked: boolean }>;
+
+export type ReorderListInput = { previousId: number | null, nextId: number | null }

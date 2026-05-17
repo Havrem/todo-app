@@ -1,4 +1,4 @@
-import type { CreateListInput, List, ListSummary, UpdateListInput } from '@/schemas/list';
+import type { CreateListInput, List, ListSummary, UpdateListInput, ReorderListInput } from '@/schemas/list';
 import { api } from './client';
 
 export const getLists = (): Promise<ListSummary[]> =>
@@ -15,3 +15,6 @@ export const updateList = (id: number, input: UpdateListInput): Promise<List> =>
 
 export const deleteList = (id: number): Promise<void> =>
     api.delete(`/item-lists/${id}`).then(() => undefined);
+
+export const reorderList = (id: number, input: ReorderListInput): Promise<List> =>
+    api.patch<List>(`/item-lists/${id}/order`, input).then((r) => r.data);

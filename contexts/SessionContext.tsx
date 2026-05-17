@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
 import { api, setUnauthorizedHandler } from "@/api/client";
+import { router } from "expo-router";
 
 type SessionContextType = {
     token: string | null;
@@ -43,6 +44,7 @@ export function SessionProvider({ children }: { children: React.ReactNode}) {
     const signOut = async () => {
         await SecureStore.deleteItemAsync('token');
         setToken(null);
+        router.replace('/start');
     }
 
     useEffect(() => {

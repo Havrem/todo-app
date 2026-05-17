@@ -1,5 +1,5 @@
 import { Header } from "@/components/basics/Header";
-import { SwipeableListRow } from "@/components/cards/SwipeableListRow";
+import { SortableLists } from "@/components/cards/SortableLists";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCategories } from "@/hooks/useCategories";
@@ -7,8 +7,7 @@ import { useCreateList, useLists } from "@/hooks/useLists";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
-import { Pressable, StyleSheet } from "react-native";
-import { View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 export function CategoryContent() {
     const { theme } = useTheme();
@@ -39,13 +38,7 @@ export function CategoryContent() {
                 onRightPress={() => router.push(`/category/${category.id}/edit`)}
             />
             <View style={styles.content}>
-                {included?.map((list) => (
-                    <SwipeableListRow
-                        key={list.id}
-                        list={list}
-                        onPress={() => router.push(`/list/${list.id}`)}
-                    />
-                ))}
+                <SortableLists lists={included} />
                 <View style={styles.bottom}>
                     <Pressable onPress={() => createList({title: 'New List...', category: category.id})} style={styles.addBtn}>
                         <Ionicons name="add-circle" size={32} color={theme.colors.icon}/>
@@ -67,13 +60,12 @@ const makeStyles = (t: Theme) => {
             backgroundColor: t.colors.content,
             padding: 10,
             flex: 1,
-            gap: 10
+            gap: 10,
         },
         bottom: {
-            flex: 1,
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
-            padding: 0
+            padding: 0,
         },
         addBtn: {
             backgroundColor: t.colors.accent,
