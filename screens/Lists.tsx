@@ -1,6 +1,7 @@
 import { Title } from "@/components/basics/ActiveTitle";
 import { Button } from "@/components/basics/Button";
 import { Header } from "@/components/basics/Header";
+import { SwipeableListRow } from "@/components/cards/SwipeableListRow";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCategories } from "@/hooks/useCategories";
@@ -53,10 +54,9 @@ export function Lists() {
                                 onPress={() => createList({ title: t('newListTitle'), category: category.id })}
                             />
                             {inCategory.map((list) => (
-                                <Button
+                                <SwipeableListRow
                                     key={list.id}
-                                    text={list.title}
-                                    icon={<Ionicons name="chevron-forward" />}
+                                    list={list}
                                     onPress={() => router.push(`/list/${list.id}`)}
                                 />
                             ))}

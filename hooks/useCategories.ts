@@ -35,6 +35,12 @@ export function useUpdateCategory(id: number) {
         mutationFn: (input: UpdateCategoryInput) => updateCategory(id, input),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['categories'] });
+            router.back();
+            Toast.show({
+                type: 'success',
+                text1: 'Category updated!',
+                position: 'bottom',
+            });
         },
     });
 }

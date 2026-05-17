@@ -6,6 +6,7 @@ import enChangePassword from './locales/en/changePassword.json';
 import enCommon from './locales/en/common.json';
 import enCreateCategory from './locales/en/createCategory.json';
 import enDeleteAccount from './locales/en/deleteAccount.json';
+import enEditCategory from './locales/en/editCategory.json';
 import enErrors from './locales/en/errors.json';
 import enHome from './locales/en/home.json';
 import enLists from './locales/en/lists.json';
@@ -18,6 +19,7 @@ import svChangePassword from './locales/sv/changePassword.json';
 import svCommon from './locales/sv/common.json';
 import svCreateCategory from './locales/sv/createCategory.json';
 import svDeleteAccount from './locales/sv/deleteAccount.json';
+import svEditCategory from './locales/sv/editCategory.json';
 import svErrors from './locales/sv/errors.json';
 import svHome from './locales/sv/home.json';
 import svLists from './locales/sv/lists.json';
@@ -39,6 +41,7 @@ export const resources = {
         deleteAccount: enDeleteAccount,
         switchTheme: enSwitchTheme,
         createCategory: enCreateCategory,
+        editCategory: enEditCategory,
         switchLanguage: enSwitchLanguage,
         errors: enErrors
     },
@@ -52,6 +55,7 @@ export const resources = {
         deleteAccount: svDeleteAccount,
         switchTheme: svSwitchTheme,
         createCategory: svCreateCategory,
+        editCategory: svEditCategory,
         switchLanguage: svSwitchLanguage,
         errors: svErrors
     },
@@ -61,7 +65,7 @@ i18n.use(initReactI18next).init({
     resources,
     lng: Localization.getLocales()[0]?.languageCode ?? 'en',
     fallbackLng: 'en',
-    ns: ['common', 'start', 'home', 'lists', 'settings', 'changePassword', 'deleteAccount', 'switchTheme', 'createCategory', 'errors'],
+    ns: ['common', 'start', 'home', 'lists', 'settings', 'changePassword', 'deleteAccount', 'switchTheme', 'createCategory', 'editCategory', 'errors'],
     defaultNS,
     interpolation: { escapeValue: false },
     compatibilityJSON: 'v4',

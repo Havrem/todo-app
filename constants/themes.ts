@@ -6,6 +6,7 @@ export const themes = {
             frame: '#DBD1B5',
             icon: '#6E3409',
             accent: '#FAF9F6',
+            accentMedium: '#eadba8',
             accentSubtle: '#faf9f67c', 
             text: 'rgba(0, 0, 0, 0.78)',
             subtle: 'rgba(0, 0, 0, 0.54)',

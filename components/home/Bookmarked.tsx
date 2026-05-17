@@ -8,6 +8,7 @@ import { StyleSheet, View } from "react-native";
 import { Title } from "../basics/ActiveTitle";
 import { Button } from "../basics/Button";
 import { router } from "expo-router";
+import { SwipeableListRow } from "../cards/SwipeableListRow";
 
 export function Bookmarked() {
   const { t } = useTranslation('home');
@@ -22,11 +23,10 @@ export function Bookmarked() {
     <View style={styles.container}>
       <Title text={t('bookmarked')} icon={<Ionicons name="bookmarks" />} onPress={() => console.log('Pressed bookmarked')}/>
       {bookmarked.map((list) => (
-        <Button
-          key={list.id}
-          text={list.title}
-          icon={<Ionicons name="chevron-forward" />}
-          onPress={() => router.push(`/list/${list.id}`)}
+        <SwipeableListRow
+            key={list.id}
+            list={list}
+            onPress={() => router.push(`/list/${list.id}`)}
         />
       ))}
     </View>

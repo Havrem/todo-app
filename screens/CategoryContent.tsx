@@ -1,11 +1,10 @@
-import { Button } from "@/components/basics/Button";
 import { Header } from "@/components/basics/Header";
-import { IconKey, IconRegistry } from "@/constants/icons";
+import { SwipeableListRow } from "@/components/cards/SwipeableListRow";
 import { Theme } from "@/constants/themes";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCategories } from "@/hooks/useCategories";
-import { useLists } from "@/hooks/useLists";
-import { Ionicons } from "@expo/vector-icons";
+import { useCreateList, useLists } from "@/hooks/useLists";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { Pressable, StyleSheet } from "react-native";
@@ -20,13 +19,12 @@ export function CategoryContent() {
 
     const { data: categories } = useCategories();
     const { data: lists } = useLists();
+    const { mutate: createList } = useCreateList();
 
     const category = categories?.find((c) => c.id === numericId);
     const included = lists?.filter((l) => l.category.id === numericId) ?? [];
 
     if (!category) return null;
-
-    const Icon = IconRegistry[category.icon as IconKey];
 
     return (
         <View style={styles.container}>
@@ -37,21 +35,22 @@ export function CategoryContent() {
                     </Pressable>
                 }
                 text={category.name}
-                right={
-                    <Pressable onPress={() => console.log('Icon pressed.')}>
-                        <Icon size={24} color={theme.colors.icon} />
-                    </Pressable>
-                } 
+                right={<FontAwesome name="edit" size={22} color={theme.colors.icon} />}
+                onRightPress={() => router.push(`/category/${category.id}/edit`)}
             />
             <View style={styles.content}>
                 {included?.map((list) => (
-                    <Button
+                    <SwipeableListRow
                         key={list.id}
-                        text={list.title}
-                        icon={<Ionicons name="chevron-forward" />}
+                        list={list}
                         onPress={() => router.push(`/list/${list.id}`)}
                     />
                 ))}
+                <View style={styles.bottom}>
+                    <Pressable onPress={() => createList({title: 'New List...', category: category.id})} style={styles.addBtn}>
+                        <Ionicons name="add-circle" size={32} color={theme.colors.icon}/>
+                    </Pressable>
+                </View>
             </View>
         </View>
     )
@@ -67,7 +66,19 @@ const makeStyles = (t: Theme) => {
         content: {
             backgroundColor: t.colors.content,
             padding: 10,
-            flex: 1
+            flex: 1,
+            gap: 10
+        },
+        bottom: {
+            flex: 1,
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            padding: 0
+        },
+        addBtn: {
+            backgroundColor: t.colors.accent,
+            padding: 10,
+            borderRadius: 40
         }
     })
 }

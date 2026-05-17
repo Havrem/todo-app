@@ -1,11 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export function Header({ text, left ,right }: { text: string; left?: React.ReactNode; right?: React.ReactNode }) {
+type Props = {
+    text: string;
+    left?: React.ReactNode;
+    right?: React.ReactNode;
+    onRightPress?: () => void;
+};
+
+export function Header({ text, left, right, onRightPress }: Props) {
     return (
         <View style={styles.container}>
             <View style={styles.side}>{left}</View>
-            <Text style={styles.txt}>{text}</Text>
-            <View style={styles.side}>{right}</View>
+            <Text style={styles.txt} numberOfLines={1} ellipsizeMode="tail">{text}</Text>
+            <View style={styles.side}>
+                {onRightPress
+                    ? <Pressable onPress={onRightPress}>{right}</Pressable>
+                    : right
+                }
+            </View>
         </View>
     )
 }
@@ -26,8 +38,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     txt: {
+        flex: 1,
         fontFamily: 'Glory-Bold',
         color: '#555555',
-        fontSize: 17
+        fontSize: 17,
+        textAlign: 'center',
+        paddingHorizontal: 8,
     },
 });
