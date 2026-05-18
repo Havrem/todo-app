@@ -56,7 +56,7 @@ export function SwipeableSectionRow({ section, listId, onLongPress, editMode }: 
     if (editMode) {
         return (
             <Pressable style={styles.row} onLongPress={onLongPress}>
-                <Ionicons name="folder-open-outline" size={20} color={theme.colors.accentStrong} />
+                {/* <Ionicons name="folder-open-outline" size={20} color={theme.colors.accentStrong} /> */}
                 <Text style={styles.txt}>{section.text || ' '}</Text>
                 <View style={styles.dragSlot}>
                     <Ionicons name="reorder-three-outline" size={20} color={theme.colors.subtle} />
@@ -75,7 +75,7 @@ export function SwipeableSectionRow({ section, listId, onLongPress, editMode }: 
             containerStyle={{ backgroundColor: theme.colors.accentMedium, borderRadius: 5 }}
         >
             <Pressable style={styles.row} onLongPress={onLongPress} unstable_pressDelay={200}>
-                <Ionicons name="folder-open-outline" size={20} color={theme.colors.accentStrong} />
+                {/* <Ionicons name="folder-open-outline" size={20} color={theme.colors.accentStrong} /> */}
                 <TextInput
                     style={styles.txt}
                     value={text}
@@ -96,7 +96,10 @@ export function SwipeableSectionRow({ section, listId, onLongPress, editMode }: 
 const makeStyles = (t: Theme) => {
     return StyleSheet.create({
         row: {
-            backgroundColor: t.colors.accentMedium,
+            backgroundColor: t.colors.content,
+            borderColor: "#000000",
+            borderBottomWidth: 1,
+            borderStyle: 'solid',
             borderRadius: 5,
             paddingHorizontal: 15,
             paddingVertical: 12,

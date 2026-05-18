@@ -1,16 +1,17 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { Platform } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import { refreshAccessToken } from "./auth";
 
 const ACCESS_TOKEN_KEY = 'token';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
-// Creates an axios instance with these settings.
-// Phone and Mac must be on the same Wi-Fi network.
-// If your Mac's LAN IP changes, update this value.
+// Android emulator reaches the host via 10.0.2.2; iOS simulator uses localhost.
+// Physical device: replace with the Mac's LAN IP (same Wi-Fi).
+const API_HOST = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+
 export const api = axios.create({
-    // baseURL: 'http://localhost:8080',
-    baseURL: 'http://192.168.50.175:8080',
+    baseURL: `http://${API_HOST}:8080`,
     headers: {'Content-Type':'application/json'},
 });
 
